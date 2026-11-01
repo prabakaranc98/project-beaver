@@ -45,7 +45,10 @@ jobs:
             echo "tools/validate.py not built yet (#27), skipping"
           fi
 
+      # Beaver's own tests; a learner's fork carries them (the root is the
+      # template) but has no reason to run them.
       - name: Unit and snapshot tests
+        if: github.repository == 'prabakaranc98/project-beaver'
         run: |
           if [ -d tests ]; then
             pytest -q

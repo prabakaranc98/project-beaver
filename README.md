@@ -24,7 +24,7 @@ All paths share one workspace format, so you can switch paths without losing any
 | --- | --- | --- |
 | **Claude Code plugin** | Anyone already in Claude Code | `/plugin marketplace add prabakaranc98/project-beaver`, then `/plugin install beaver@beaver`, then `/beaver:onboard` |
 | **Living repo (your fork)** | Claude Code in the VS Code terminal, other skills-compatible assistants (Codex, Cursor, Gemini CLI and others), or no assistant at all | "Use this template", or `beaver init`, then open the folder and start your assistant |
-| **`beaver` CLI** | State, sprints and checks from the terminal, with no model and no tokens | `uv tool install …` (the package name is still being chosen) |
+| **`beaver` CLI** | State, sprints and checks from the terminal, with no model and no tokens | `uv tool install project-beaver` once it is published; the command is `beaver` |
 | **`beaver ui`** (M4) | Seeing it all at once | `beaver ui`, served on localhost with no account |
 
 Your workspace is the source of truth: plain Markdown and YAML in git. Everything else is a thin client over it.
@@ -155,7 +155,7 @@ flowchart LR
 - **Every PR** runs CI: a Conventional Commits title check, the validator and the tests. `main` is protected, and merges are squashed.
 - **Every release** gets a tag, a `CHANGELOG.md` entry and release notes with an upgrade section. A schema change bumps `schema_version` and ships with a migration.
 - **Nothing ships on a date.** Release acceptance ([#54](https://github.com/prabakaranc98/project-beaver/issues/54), *proposed*) checks every feature a release claims in four ways: a test, a fixture, an agent run that uses Beaver as a learner would, and a hand run. A separate reviewer run reads only the notes and the evidence, and it flags any claim the evidence does not back. The notes list only checked claims.
-- **The CLI** installs from a tag with `uv tool install git+https://github.com/prabakaranc98/project-beaver@vX.Y.Z` *(proposed)*, with PyPI once the package name is chosen.
+- **The CLI** installs from a tag with `uv tool install git+https://github.com/prabakaranc98/project-beaver@vX.Y.Z` *(proposed)*, and from PyPI as `project-beaver` once published.
 - **The plugin** installs from this repo's own marketplace. A release workflow *(proposed)* checks that the versions in `pyproject.toml`, `plugin.json` and `marketplace.json` agree.
 - **Your fork** upgrades with `beaver upgrade`. It pulls `core/` and the skills from a tag, runs migrations and shows the changelog, and it never touches your own folders. *Proposed:*
   - The template's `.claude/settings.json` enables the Beaver plugin, so opening your fork in Claude Code and trusting the folder is the whole install.
@@ -177,4 +177,4 @@ Read [`CONTRIBUTING.md`](CONTRIBUTING.md). Every change starts from an issue and
 
 ## License
 
-[MIT](LICENSE).
+Beaver itself, meaning its code, method, skills and templates, is [MIT](LICENSE). What you write in your own workspace is yours. The license does not cover your notes, evidence, reflections or projects, and they carry no license unless you add one.
