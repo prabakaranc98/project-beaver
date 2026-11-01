@@ -1,0 +1,37 @@
+{
+  "additionalProperties": false,
+  "description": "What changed in understanding and what remains open. Written by the learner. Lives in reflections/.",
+  "properties": {
+    "id": {
+      "pattern": "^(reflection)\\.[a-z0-9][a-z0-9-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "date": {
+      "format": "date",
+      "title": "Date",
+      "type": "string"
+    },
+    "links": {
+      "default": [],
+      "items": {
+        "pattern": "^(brief|sprint|project|capability|concept|inquiry|evidence)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "Links",
+      "type": "array"
+    },
+    "next_action": {
+      "minLength": 1,
+      "title": "Next Action",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "date",
+    "next_action"
+  ],
+  "title": "Reflection",
+  "type": "object"
+}

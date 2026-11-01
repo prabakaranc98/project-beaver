@@ -22,7 +22,7 @@ DEFERRED_FILES = {
     "AGENTS.md": "#24",
     "CLAUDE.md": "#24",
     "learner/direction.md": "#31, onboard writes it",
-    "learner/now.md": "#26, the now template",
+    "learner/now.md": "#31, onboard writes it from core/templates/now.md",
     "learner/curriculum.md": "#31, onboard drafts the first curriculum",
     "learning/inbox.md": "#41, beaver capture appends to it",
     "learning/resources.yaml": "no MVP issue yet",
