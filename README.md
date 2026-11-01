@@ -171,6 +171,8 @@ flowchart LR
 5. **Portable and plain.** Markdown and YAML in git, usable with any assistant or none.
 6. **Small core, optional accessories.** Nothing in the core depends on an accessory.
 
+How every part of Beaver serves these, and how its agent behaves moment by moment: [`docs/the-beaver-way.md`](docs/the-beaver-way.md).
+
 ## Contributing
 
 Read [`CONTRIBUTING.md`](CONTRIBUTING.md). Every change starts from an issue and goes through a PR with green CI. Friction found while dogfooding becomes a *Dogfood friction* issue the same day.
