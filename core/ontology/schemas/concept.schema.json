@@ -1,0 +1,47 @@
+{
+  "additionalProperties": false,
+  "description": "Knowledge that supports a capability, in the learner's words. Lives in learning/concepts/.",
+  "properties": {
+    "id": {
+      "pattern": "^(concept)\\.[a-z0-9][a-z0-9-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "prerequisites": {
+      "default": [],
+      "items": {
+        "pattern": "^(concept)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "Prerequisites",
+      "type": "array"
+    },
+    "related": {
+      "default": [],
+      "items": {
+        "pattern": "^(concept)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "Related",
+      "type": "array"
+    },
+    "resources": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Resources",
+      "type": "array"
+    }
+  },
+  "required": [
+    "id",
+    "title"
+  ],
+  "title": "Concept",
+  "type": "object"
+}

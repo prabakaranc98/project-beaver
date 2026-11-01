@@ -1,0 +1,66 @@
+{
+  "additionalProperties": false,
+  "description": "A bounded challenge: who it is for, the outcome, what it is not, and when it is done.",
+  "properties": {
+    "id": {
+      "pattern": "^(brief)\\.[a-z0-9][a-z0-9-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "user": {
+      "minLength": 1,
+      "title": "User",
+      "type": "string"
+    },
+    "outcome": {
+      "minLength": 1,
+      "title": "Outcome",
+      "type": "string"
+    },
+    "practises": {
+      "items": {
+        "pattern": "^(capability)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Practises",
+      "type": "array"
+    },
+    "constraints": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Constraints",
+      "type": "array"
+    },
+    "non_goals": {
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "title": "Non Goals",
+      "type": "array"
+    },
+    "done_when": {
+      "minLength": 1,
+      "title": "Done When",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "title",
+    "user",
+    "outcome",
+    "practises",
+    "non_goals",
+    "done_when"
+  ],
+  "title": "Brief",
+  "type": "object"
+}

@@ -1,0 +1,54 @@
+{
+  "additionalProperties": false,
+  "description": "A fixed budget of deep-work hours on one brief. Lives in sprints/.",
+  "properties": {
+    "id": {
+      "pattern": "^(sprint)\\.[a-z0-9][a-z0-9-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "brief": {
+      "pattern": "^(brief)\\.[a-z0-9][a-z0-9-]*$",
+      "title": "Brief",
+      "type": "string"
+    },
+    "budget_hours": {
+      "exclusiveMinimum": 0,
+      "maximum": 80,
+      "title": "Budget Hours",
+      "type": "number"
+    },
+    "goal": {
+      "minLength": 1,
+      "title": "Goal",
+      "type": "string"
+    },
+    "practises": {
+      "default": [],
+      "items": {
+        "pattern": "^(capability)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "Practises",
+      "type": "array"
+    },
+    "status": {
+      "default": "planned",
+      "enum": [
+        "planned",
+        "active",
+        "closed"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "brief",
+    "budget_hours",
+    "goal"
+  ],
+  "title": "Sprint",
+  "type": "object"
+}

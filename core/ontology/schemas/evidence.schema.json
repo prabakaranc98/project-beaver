@@ -1,0 +1,115 @@
+{
+  "$defs": {
+    "Artifact": {
+      "additionalProperties": false,
+      "description": "Code, a diagram or a write-up, referenced in its project repo, never copied.",
+      "properties": {
+        "repo": {
+          "title": "Repo",
+          "type": "string"
+        },
+        "ref": {
+          "title": "Ref",
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        }
+      },
+      "required": [
+        "repo",
+        "ref"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "An artifact interpreted against a claim. Lives in evidence/.",
+  "properties": {
+    "id": {
+      "pattern": "^(evidence)\\.[a-z0-9][a-z0-9-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "claim": {
+      "minLength": 1,
+      "title": "Claim",
+      "type": "string"
+    },
+    "supports": {
+      "default": [],
+      "items": {
+        "pattern": "^(capability)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "Supports",
+      "type": "array"
+    },
+    "challenges": {
+      "default": [],
+      "items": {
+        "pattern": "^(capability)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "Challenges",
+      "type": "array"
+    },
+    "artifacts": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Artifact"
+      },
+      "title": "Artifacts",
+      "type": "array"
+    },
+    "level": {
+      "description": "0 Claimed, 1 Produced, 2 Explained, 3 Varied, 4 Maintained, 5 Delivered",
+      "maximum": 5,
+      "minimum": 0,
+      "title": "Level",
+      "type": "integer"
+    },
+    "assistance": {
+      "enum": [
+        "socratic",
+        "hint",
+        "example",
+        "pair",
+        "delegate"
+      ],
+      "title": "Assistance",
+      "type": "string"
+    },
+    "reviewed_in": {
+      "anyOf": [
+        {
+          "pattern": "^(review)\\.[a-z0-9][a-z0-9-]*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reviewed In"
+    }
+  },
+  "required": [
+    "id",
+    "claim",
+    "level",
+    "assistance"
+  ],
+  "title": "Evidence",
+  "type": "object"
+}

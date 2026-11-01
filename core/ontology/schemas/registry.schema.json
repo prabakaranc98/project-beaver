@@ -1,0 +1,237 @@
+{
+  "$defs": {
+    "Limits": {
+      "additionalProperties": false,
+      "description": "Work-in-progress limits the learner can change (docs/design.md, \"Registry limits\").",
+      "properties": {
+        "active_projects": {
+          "default": 2,
+          "minimum": 1,
+          "title": "Active Projects",
+          "type": "integer"
+        },
+        "ideas_under_evaluation": {
+          "default": 5,
+          "minimum": 1,
+          "title": "Ideas Under Evaluation",
+          "type": "integer"
+        },
+        "active_sprints": {
+          "default": 1,
+          "minimum": 1,
+          "title": "Active Sprints",
+          "type": "integer"
+        },
+        "days_since_review": {
+          "default": 30,
+          "minimum": 1,
+          "title": "Days Since Review",
+          "type": "integer"
+        }
+      },
+      "title": "Limits",
+      "type": "object"
+    },
+    "Privacy": {
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "default": "private",
+          "enum": [
+            "public",
+            "private",
+            "client-confidential"
+          ],
+          "title": "Classification",
+          "type": "string"
+        },
+        "external_model_use": {
+          "default": "allowed",
+          "enum": [
+            "allowed",
+            "approval-required",
+            "forbidden"
+          ],
+          "title": "External Model Use",
+          "type": "string"
+        }
+      },
+      "title": "Privacy",
+      "type": "object"
+    },
+    "Project": {
+      "additionalProperties": false,
+      "description": "A concrete body of work in its own repo, connected by a registry entry, read-only.",
+      "properties": {
+        "id": {
+          "pattern": "^(project)\\.[a-z0-9][a-z0-9-]*$",
+          "title": "Id",
+          "type": "string"
+        },
+        "source": {
+          "$ref": "#/$defs/Source"
+        },
+        "relationship": {
+          "enum": [
+            "beaver-started",
+            "existing"
+          ],
+          "title": "Relationship",
+          "type": "string"
+        },
+        "access": {
+          "const": "read-only",
+          "default": "read-only",
+          "title": "Access",
+          "type": "string"
+        },
+        "state": {
+          "default": "active",
+          "enum": [
+            "active",
+            "paused",
+            "closed"
+          ],
+          "title": "State",
+          "type": "string"
+        },
+        "practises": {
+          "default": [],
+          "items": {
+            "pattern": "^(capability)\\.[a-z0-9][a-z0-9-]*$",
+            "type": "string"
+          },
+          "title": "Practises",
+          "type": "array"
+        },
+        "brief": {
+          "anyOf": [
+            {
+              "pattern": "^(brief)\\.[a-z0-9][a-z0-9-]*$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Brief"
+        },
+        "review": {
+          "$ref": "#/$defs/Review",
+          "default": {
+            "trigger": "manual",
+            "last_reviewed_commit": null
+          }
+        },
+        "privacy": {
+          "$ref": "#/$defs/Privacy",
+          "default": {
+            "classification": "private",
+            "external_model_use": "allowed"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "source",
+        "relationship"
+      ],
+      "title": "Project",
+      "type": "object"
+    },
+    "Review": {
+      "additionalProperties": false,
+      "properties": {
+        "trigger": {
+          "default": "manual",
+          "enum": [
+            "manual",
+            "scheduled"
+          ],
+          "title": "Trigger",
+          "type": "string"
+        },
+        "last_reviewed_commit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Last Reviewed Commit"
+        }
+      },
+      "title": "Review",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "enum": [
+            "github",
+            "local"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "repository": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Repository"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Path"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Source",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "projects/registry.yaml: the limits plus every connected project.\n\nGoing over a limit is not a schema error; the progress check flags it.",
+  "properties": {
+    "limits": {
+      "$ref": "#/$defs/Limits",
+      "default": {
+        "active_projects": 2,
+        "ideas_under_evaluation": 5,
+        "active_sprints": 1,
+        "days_since_review": 30
+      }
+    },
+    "projects": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/Project"
+      },
+      "title": "Projects",
+      "type": "array"
+    }
+  },
+  "title": "Registry",
+  "type": "object"
+}
