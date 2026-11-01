@@ -29,6 +29,22 @@ Beaver is built in the open and dogfooded from day one. Every change, including 
 
 A bug fix comes with a test that fails before the fix.
 
+## Testing in the terminal
+
+`bench/bench.py` runs Claude Code against a throwaway learner workspace. That shows how Beaver behaves for a learner, not for you.
+
+```bash
+cp .env.example .env              # add OPENROUTER_API_KEY; .env is git-ignored
+python bench/bench.py doctor      # route works, isolation holds
+python bench/bench.py shell --workspace core/examples       # hands-on session
+python bench/bench.py run "Run the progress check" --workspace core/examples
+python bench/bench.py run "…" -- --plugin-dir .              # test as a plugin (#39)
+```
+
+- Each sandbox is a temp dir outside any repo, because Claude Code loads CLAUDE.md files from parent folders. Each run also gets a fresh `CLAUDE_CONFIG_DIR`, so your own CLAUDE.md, memory, plugins and login stay out. `doctor --canary "<a phrase from your global CLAUDE.md>"` proves it.
+- `run` logs the transcript and a summary to `.bench/runs/` (git-ignored). The summary holds the result, the files changed, and any write outside `generated/`, which makes the run exit 1.
+- Costs: Claude Code's estimate runs well above OpenRouter's real charge, so the summary shows both. Keep `--model haiku` for smoke runs.
+
 ## Friction while dogfooding
 
 Anything confusing, slow, noisy or missing becomes a *Dogfood friction* issue the same day, one issue per friction. The backlog is triaged every Sunday.
