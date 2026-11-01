@@ -1,0 +1,22 @@
+[project]
+name = "project-beaver"
+version = "0.0.0"
+description = "An open apprenticeship harness for AI-focused forward-deployed engineering"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.12"
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/prabakaranc98/project-beaver"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/beaver"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

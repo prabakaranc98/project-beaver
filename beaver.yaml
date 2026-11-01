@@ -1,0 +1,16 @@
+# Beaver workspace settings. Further sections (registry limits, privacy,
+# agent_policy) land with the issues that define them, starting with #25.
+schema_version: 0
+
+# Each folder has exactly one owner (docs/design.md, "Repository structure").
+# Only the owners the design doc states are filled in; the rest are decided
+# with the schemas (#25) and the validator (#27).
+ownership:
+  method: [core/, .agents/skills/, CHARTER.md]        # upstream maintainer; local edits get flagged
+  learner: [learner/, learning/, projects/, evidence/, reflections/]   # the source of truth
+  generated: [generated/]                             # assistant output, never authoritative
+  unassigned: [AGENTS.md, CLAUDE.md, .claude/skills/, sprints/, portfolio/, tools/]
+
+# Beaver's own development files. A learner's fork carries them because the
+# repo root is the template; forks may delete them, and `beaver upgrade` skips them.
+maintainer_only: [docs/, tests/, bench/, src/, pyproject.toml, .github/, CONTRIBUTING.md, .env.example]
