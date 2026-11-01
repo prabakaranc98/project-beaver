@@ -1,0 +1,2 @@
+- Read: how payment APIs use idempotency keys
+- Why does backoff need jitter?

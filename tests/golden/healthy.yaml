@@ -1,0 +1,8 @@
+# core/examples is the healthy workspace: nothing to report.
+workspace: core/examples
+as_of: 2026-11-10
+validate: []
+status:
+  inbox_captures: 2
+  aging_inquiries: []
+  over_limit: {}

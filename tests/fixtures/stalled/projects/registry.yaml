@@ -1,0 +1,6 @@
+projects:
+  - id: project.crm-sync
+    source: {type: local, path: child/crm-sync}
+    relationship: beaver-started
+    state: active
+    review: {trigger: manual, last_reviewed_commit: set-by-the-test}

@@ -1,0 +1,13 @@
+projects:
+  - id: project.p1
+    source: {type: local, path: child/p1}
+    relationship: existing
+    state: active
+  - id: project.p2
+    source: {type: local, path: child/p2}
+    relationship: existing
+    state: active
+  - id: project.p3
+    source: {type: local, path: child/p3}
+    relationship: existing
+    state: active
