@@ -745,6 +745,372 @@ Every project is registered, and the registry holds work-in-progress limits that
 
 | Limit | Default | When it is exceeded |
 | --- | --- | --- |
-| Active projects | 2 | (cut off) |
+| Active projects | 2 | `start-project` asks which one to pause or close first |
+| Ideas under evaluation | 5 | The oldest ideas get a "keep, park or drop?" prompt |
+| Active sprints | 1 | A new sprint waits until the current one closes |
+| Days since a project's last review | 30 | The project is flagged in the progress check |
 
-> **The rest of this doc is missing.** The pasted copy was cut off at 50,000 characters, here. Issue #1 tracks adding the remaining sections.
+Pausing or closing a project takes a three-line note: why, what was learned, what's left. A repo that isn't registered is invisible to Beaver by design, which keeps everything in one place.
+
+## Progress check and learning companion
+
+Two layers do the bookkeeping, so the learner doesn't have to. A progress check runs every time the repo is opened and needs no model. An optional companion runs on a schedule with any model API. It watches and suggests, and never changes the learner's work.
+
+### Progress check (core, no model)
+
+`tools/status` reads the workspace and writes `generated/status.md`. It runs when a session starts, because AGENTS.md tells the assistant to run it first, and it can also run as a git hook or by hand. The checks are deterministic, so the same repo always gives the same report.
+
+| Check | Example line in the report |
+| --- | --- |
+| Inbox waiting | 6 captures not yet processed |
+| Questions aging | 3 inquiries open for more than 2 weeks |
+| Orphan notes | 4 concepts with no links |
+| Capabilities without evidence | `capability.retrieval-eval` has no evidence yet |
+| Unreviewed work | `project.crm-sync`: 14 commits since last review |
+| Reflection rhythm | Last reflection 9 days ago |
+| Track balance | All recent work is on the AI track; nothing on platform this month |
+
+### Learning companion (optional, bring your own key)
+
+The companion is a small scheduled run that reads the workspace and writes a digest. It works with any provider the learner chooses: OpenRouter, Anthropic, OpenAI, or a local model. It is an observer and coach, not an actor.
+
+| The companion can | The companion cannot |
+| --- | --- |
+| Read the workspace (respecting privacy classes) | Edit notes, evidence, reflections or `now.md` |
+| Write a weekly digest to `generated/digests/` | Touch project repos, commit, push or open PRs |
+| Spot patterns: recurring questions, concepts used in several projects, stalled work | Correct code or grade the learner |
+| Ask one good question for the week | Send messages anywhere unless the learner sets up a channel |
+| Suggest one next action | Read anything marked `client-confidential` |
+
+Each digest has the same short shape: what you did, what's connecting, questions ready to revisit, one question to think about, and one suggested next action.
+
+**Where it runs.** Options are a local cron job, a scheduled GitHub Action on a private repo, or a scheduled task in the learner's assistant app. The API key lives in `.env` and is never committed.
+
+**Future connections.** The concept map could be exported to a spatial canvas such as Muse. Digests and nudges could reach the learner through a proactive personal agent such as Claude Duet, by way of the read-only MCP server described in the next section. Both are open questions, not dependencies.
+
+## A learning-first contract for any agent
+
+Beaver's most portable output is not the repo but a contract. Any agent that touches the learner's work follows the same rules, so automation serves learning instead of replacing it. That includes a coding assistant, the companion, and a proactive personal agent that keeps working in the background, such as Claude Duet.
+
+The failure this prevents is AI slop: work that looks finished while the person learned nothing, can't explain it and couldn't do it again.
+
+**The automation boundary.** Agents automate the bookkeeping freely, assist with drafts that the learner decides on, and never take the parts that build judgment.
+
+| Zone | What falls in it | Agent behavior |
+| --- | --- | --- |
+| Automate freely | Filing captures, running the progress check, scheduling reviews, finding resources, formatting, reminders | Do it and log it |
+| Assist, learner decides | Drafts of briefs and reviews, link suggestions, simpler explanations, variation tasks | Write to `generated/` and wait for the learner's ok before anything moves into learner records |
+| Never automate | Framing the problem, the core design decision, the explanation, the reflection, any claim of capability | Ask a question, offer a hint, or point to a resource, then hand it back |
+
+**Nudges that build agency.** A nudge is a short, proactive message from an agent. Each kind serves learning, not engagement.
+
+| Nudge | Fires when | Example |
+| --- | --- | --- |
+| Return | An inquiry has been open longer than the learner's threshold | "Your question on idempotency key TTL is two weeks old. Did crm-sync answer it?" |
+| Explain | Recent work is mostly delegated | "Three delegated changes this week. Want to explain one in your own words before moving on?" |
+| Connect | A concept shows up in two projects | "Retries came up in crm-sync and search-api. Worth one concept note?" |
+| Stretch | Evidence for a capability is stuck at level 2 | "Try a variation: same retry logic, but the API has no idempotency keys." |
+| Notice | An inquiry was answered or evolved | "You closed the timeout question. It turned into a better one about backoff." |
+
+**Rules for every nudge**
+
+- Link to the learner's own file and end with one question or one action.
+- Respect a weekly limit the learner sets (default 3), and make every kind easy to snooze.
+- No streaks, guilt, scores or engagement tricks.
+- Never answer the question the nudge raises unless the learner asks.
+
+**Slop guards**
+
+- Every agent-written file carries provenance: the agent, the model and the assistance mode.
+- Delegated work stays at evidence level 1 until the learner explains it.
+- When delegated work passes a share the learner sets (default 50% over two weeks), agents switch to the Explain nudge before helping further.
+- Generated prose is never evidence by itself.
+
+**How other agents adopt the contract.** It is published through three surfaces, so an agent can follow it without being built for Beaver.
+
+| Surface | Who reads it | What it carries |
+| --- | --- | --- |
+| `AGENTS.md` + `CHARTER.md` | Coding agents | The boundary, modes and write rules |
+| `learning-first` Agent Skill | Any skills-compatible agent | The nudge kinds, nudge rules and slop guards as a loadable workflow |
+| Read-only MCP server (`beaver-mcp`) | Proactive personal agents | Tools that read now, status, open inquiries and the `agent_policy` block, and propose nudges without write access |
+
+The machine-readable version lives in `beaver.yaml` under `agent_policy`, so an agent can check the rules instead of guessing them.
+
+## Portfolio and career extension
+
+Beaver turns reviewed evidence into a public portfolio, and its role packs let a fork grow from FDE into any engineering direction the learner chooses.
+
+### Portfolio site
+
+`build-portfolio` and `tools/site` generate a static site in `portfolio/` from four sources: public projects in the registry, case studies, evidence at level 2 or above, and concept notes the learner marks public. The learner publishes it to `<username>.github.io` with GitHub Pages.
+
+| Site page | Built from | Rule |
+| --- | --- | --- |
+| About | `learner/direction.md` | The learner writes it |
+| Projects | Case studies + registry | Public projects only |
+| Capabilities | Evidence records | Each claim links to its evidence and shows its level |
+| Notes | Concept notes marked `public: true` | Opt-in per note |
+| Now | `learner/now.md` | Optional |
+
+The learner approves every page before it publishes. Anything private or client-confidential never leaves the repo.
+
+### Role packs
+
+FDE is the first pack, not the only one. A role pack in `core/roles/<role>/` holds a capability map, knowledge pages, first challenges and review rubrics. A learner picks a home pack and can add a secondary one.
+
+| Pack | Status |
+| --- | --- |
+| Forward-deployed engineering (all five tracks) | Ships first |
+| Backend engineering | Future, or community |
+| ML engineering | Future, or community |
+| Data engineering | Future, or community |
+| Applied science | Future, or community |
+| AI product | Future, or community |
+
+Personal packs live in `learner/roles/`, and a good one can be offered upstream as a pull request.
+
+### Shaping a personal curriculum
+
+When the learner adds a role or changes direction, the coding assistant uses `shape-curriculum` to restructure their plan. It proposes the new curriculum and the learner decides.
+
+1. The learner updates `direction.md`, for example "add backend engineering as a second role."
+2. The fork pulls that pack from upstream, or the learner starts one in `learner/roles/`.
+3. `shape-curriculum` compares the pack's capabilities with the learner's current evidence.
+4. A draft lands in `generated/drafts/`: ranked capability gaps, sequenced challenges, concepts to learn and a sprint plan.
+5. The learner accepts the parts they want into `learner/curriculum.md`.
+6. From then on, the progress check reports against the new curriculum.
+
+On a later change of direction, the skill proposes a diff to the curriculum, never a full rewrite.
+
+## Configuration and integrity
+
+The repo should change through learning, not through a weakened purpose. Beaver protects that by checking it rather than by trusting instructions: prompts shape behavior, permissions and the validator enforce it.
+
+**`beaver.yaml`**
+
+```yaml
+schema_version: 1
+learner:
+  home_track: ai                # data | ml | ai | product | platform
+  role_packs: [fde]             # add more, e.g. [fde, backend]
+  default_mode: hint            # socratic | hint | example | pair | delegate
+projects:
+  default_access: read-only
+  execute_project_code: false
+  wip_limits: { active_projects: 2, ideas_in_evaluation: 5, active_sprints: 1 }
+  review_due_days: 30
+sprints:
+  default_budget_hours: 20
+  require_close_out: true
+recording:
+  wikilinks: true               # Obsidian-compatible [[slug]] links
+reviews:
+  trigger: manual
+  require_source_refs: true
+  max_next_actions: 2
+budget:
+  monthly_model_usd: <set at onboarding>   # Beaver's own calls only
+  per_skill_max_tokens: <per skill>
+  beaver_time_share_limit: 0.15            # of sprint hours
+  usage_log: generated/usage.jsonl
+mentor:
+  stage: apprentice             # apprentice | builder | practitioner
+  watch: [not_testing, not_reviewing, idea_churn, building_blind, avoiding_hard_part, going_quiet]
+  notes_file: generated/mentor-notes.md   # visible, editable, dismissable
+status:
+  run_on_session_start: true
+  stale_inquiry_days: 14
+  reflection_reminder_days: 7
+companion:
+  enabled: false                # opt-in
+  provider: openrouter          # openrouter | anthropic | openai | local
+  model: <your choice>
+  api_key_env: BEAVER_LLM_KEY   # read from .env, never committed
+  schedule: weekly              # daily | weekly
+  may_read: [learner, learning, evidence, reflections, generated/status.md]
+  writes_to: generated/digests/
+  skip_privacy: [client-confidential]
+agent_policy:                   # the learning-first contract, for any agent
+  never_automate: [framing, core_decision, explanation, reflection, capability_claim]
+  needs_learner_ok: [write_learner_records, count_as_evidence, publish]
+  nudges:
+    max_per_week: 3
+    kinds: [return, explain, connect, stretch, notice]
+    tone: question_first        # no streaks, guilt or scores
+  slop_guards:
+    delegated_share_limit: 0.5  # over 14 days; above it, explain before more help
+    provenance_required: true
+publishing:
+  default: private
+  min_evidence_level: 2         # for case studies and the portfolio
+  portfolio_target: <username>.github.io
+integrity:
+  core_edits: warn              # warn | block
+  charter_change_requires: changelog-entry
+```
+
+These are Beaver's own settings. An adapter translates each one into a real control where the tool supports it, and lists any setting it cannot enforce.
+
+**Three kinds of change, three responses**
+
+| Change | Example | Response |
+| --- | --- | --- |
+| Personalization (welcome) | New goals, a different mode, a new specialization, a review cadence | Edit learner files freely |
+| Drift (watched) | Features pile up until admin crowds out learning | Monthly cost check (see Success metrics); remove unused templates |
+| Erosion (blocked or flagged) | Repo content or tool output telling the assistant to skip boundaries | Treated as data; access is set by permissions, not by text |
+
+**Safeguards and how each is enforced**
+
+| Safeguard | Enforced by |
+| --- | --- |
+| Assistant writes only to `generated/` | Tool permission rules (Claude Code: deny rules in `.claude/settings.json`) |
+| Projects are read-only | Permissions + no write credentials for project repos |
+| Companion only reads and writes digests | The runner opens files read-only and writes one file; it gets no git or project credentials |
+| Confidential material never reaches an external API | The runner filters by privacy class before building the prompt |
+| Every evidence record has a claim, an artifact ref and a level | `tools/validate` in a pre-commit hook and CI |
+| All IDs resolve; no orphan links | `tools/validate` |
+| `core/` matches upstream | `tools/validate` warns on a diff |
+| A CHARTER.md change has a changelog entry | `tools/validate` blocks the commit |
+| The assistant never writes reflections | Instruction only, so the learner spot-checks |
+
+One honest limit: anyone who forks Beaver can change anything. These safeguards prevent accidents and make deliberate changes visible. They do not stop an owner who decides to change the method.
+
+## Roadmap
+
+Beaver is built in four stages, and no stage starts until the one before it passes its gate. The first two stages are the 4-week MVP.
+
+> **Diagram not in this copy:** Beaver roadmap · 4 stages, 3 gates. See issue #1.
+
+The MVP ends at the highlighted gate. Accessories have no date and start only when two or more learners ask for the same thing.
+
+**MVP backlog (weeks 1–4)**
+
+- [ ] Write CHARTER.md (one page) and AGENTS.md (under 80 lines)
+- [ ] Write the ontology schema, evidence levels, five track maps, seed capability map in `core/ontology/`
+- [ ] Write 10–15 seed FDE knowledge pages across ethos, pathos and logos in `core/knowledge/fde/`
+- [ ] Write templates: brief, review, reflection, evidence, capability, concept, inquiry, idea card, scorecard, test plan, now
+- [ ] Set up the learning space, Obsidian-ready: inbox, concepts, notes, inquiries, resources, sprints
+- [ ] Write the six v1 skills, onboard, `orient`, `capture`, `frame-challenge`, `review-evidence`, `reflect`
+- [ ] Build `tools/status` (the progress check) and `tools/validate` (schema, IDs, evidence fields, core diff), exposed as the first beaver CLI commands: beaver, capture, sprint, validate
+- [ ] Add the Claude Code adapter: CLAUDE.md, `.claude/skills/`, permission deny rules
+- [ ] Write a worked example workspace in `core/examples/`
+- [ ] Run the author's own full loop on one real project
+- [ ] Onboard three pilot learners from different tracks, then hold a 30-minute debrief with each at week 4
+
+**Explicitly not in the MVP:** a local UI, a graph view, MCP integrations, project creation scripts, a second adapter, publishing, the learning companion, or a curation agent. The companion is the first accessory to build once the MVP gate passes.
+
+## Success metrics
+
+Beaver succeeds if learners get better at the craft while the framework stays cheap to run. Targets come after the pilot sets a baseline; the MVP target is a single completed loop per pilot learner.
+
+**Learner outcomes**
+
+| Outcome | How it is observed |
+| --- | --- |
+| Frames problems more clearly | Brief quality: first brief compared with fourth, scored with the review rubric |
+| Spots missing system elements | `map-system` gaps the learner found before the assistant flagged them |
+| Explains choices independently | Share of evidence at level 2 or above |
+| Transfers what they learned | Variation tasks passed (level 3) |
+| Knowledge compounds | Concepts used in two or more projects; inquiries answered or evolved |
+| Keeps agency over automation | Delegated share over time; Explain nudges acted on |
+| Makes accurate claims | Claims a reviewer accepts or downgrades |
+| Finishes scoped work | Briefs that reach done-when |
+| Needs less help over time | Mix of assistance modes shifting from Pair or Delegate toward Hint or Socratic |
+
+**Framework cost** (checked monthly)
+
+| Question | Signal to act on |
+| --- | --- |
+| What share of sprint time goes to Beaver itself? | More than 15% |
+| How much model spend per evidence level gained? | Rising for two months |
+| How many minutes a week go to maintaining Beaver itself? | It grows faster than the learning time |
+| Which templates and skills go unused? | Unused for 4 weeks means remove or merge them |
+| Are reviews repetitive? | The same next actions three times running |
+| Does the assistant interrupt more than it helps? | Pilot debrief |
+| Can someone stop using Beaver and keep everything? | Must always be yes, because it is plain files in git |
+
+## Risks and open questions
+
+The biggest risk is that Beaver becomes another system to maintain instead of a way to learn.
+
+| Risk | Mitigation |
+| --- | --- |
+| Admin overhead crowds out real work | Six v1 skills, a time budget for Beaver itself, the progress check does the bookkeeping, unused parts deleted |
+| Assistants load or follow skills inconsistently | Test each skill in two assistants; keep AGENTS.md self-sufficient |
+| Evidence turns into self-graded theater | Claims need artifact refs; level 3 and above need a variation task or another person |
+| The companion or a personal agent nags, or quietly does the thinking | The weekly nudge limit, the never-automate list, the delegated-share guard |
+| Notes leak to an external API | Privacy classes filtered before any prompt; local-model option |
+| Scope creep pulls in Praxis or a curation agent | Both stay separate projects unless a pilot shows a need |
+| Client confidentiality | The `client-confidential` class plus hand-written reflections |
+| Five tracks dilute the method | One ontology and one loop; tracks only change the seed capabilities and first challenges |
+
+**Open questions**
+
+- [ ] Who are the three pilot learners, which tracks are they on, and what will each build?
+- [ ] Who writes the seed FDE knowledge pages, and who reviews them before they ship?
+- [ ] What is the default sprint size: 15 or 20 hours? Should hours be logged by hand or by a timer?
+- [ ] Should concepts use plain YAML now, or align to SKOS or JSON-LD from day one?
+- [ ] Where should the companion run by default: local cron, a GitHub Action, or a scheduled task in an assistant app?
+- [ ] Which proactive agent is the first integration target (for example Claude Duet), and does it support connecting a read-only MCP server?
+- [ ] Should the concept map export to a canvas tool such as Muse, and in what format?
+- [ ] Which second role pack comes first, and is it written upstream or by the community?
+- [ ] Should the 2025 Agent-Beaver idea return as an optional `curate-resources` skill?
+- [ ] Is it one fork per learner, or is there a mentor view across several learners?
+- [ ] Which license fits: MIT or Apache-2.0 for `core/`, and what is the stated default for learner content?
+- [ ] Should a second person verify level 3 and above, or is the learner's own variation task enough?
+
+**Harness questions**
+
+- [ ] Should the CLI be written in Python (uv tool, Typer, Pydantic, FastAPI for the UI) or TypeScript (npx, a Node server)?
+- [ ] What is the package and command name, and is it free on PyPI or npm?
+- [ ] Should `beaver watch` stay a foreground process, or install as a user service?
+- [ ] Which UI stack fits the calm design system best: server-rendered HTML with htmx, or a small single-page app?
+
+* [ ] Should the Claude Code plugin be the default path, with the template second, or the reverse?
+* [ ] Should onboarding's resume parsing run locally by default (a small local model) to avoid sending the resume anywhere?
+
+## Review checklist and decision log
+
+Read the doc through once with these questions, then record each settled choice in the log below.
+
+**Review checklist**
+
+- [ ] After the Summary, can a newcomer say what Beaver is in one sentence?
+- [ ] Does every core feature trace back to one of the five principles?
+- [ ] Does anything in the core depend on an accessory?
+- [ ] Is each "enforced" claim backed by a permission or the validator, not just an instruction?
+- [ ] Could one person build the MVP in 4 weeks part-time?
+- [ ] Would a skeptical hiring manager trust an evidence record at level 2?
+- [ ] Is there any part a pilot learner would skip, and if so, why keep it?
+
+**Decision log**
+
+| Date | Decision | Why | Status |
+| --- | --- | --- | --- |
+| 2026-11-01 | Three ways in sharing one workspace: Claude Code plugin, template fork, standalone CLI with the learner's own key | Meet learners in the tool they already use | Proposed |
+| 2026-11-01 | Seven-question onboarding; resume lines enter as level-0 claims, never as evidence | Fast start without inflating the record | Proposed |
+| 2026-11-01 | Token and time budgets: Beaver's own spend capped, Beaver time at or under 15% of sprint hours, no chat mode | Effort goes into building, not into talking to Beaver | Proposed |
+| 2026-11-01 | Beaver ships as a thin harness: `beaver` CLI, local UI, MCP server and companion over one core library; no agent loop of its own | Lives in the terminal; the coding assistant stays the agent; files stay the truth | Proposed |
+| 2026-11-01 | Beaver ships an FDE knowledge base organized as ethos, pathos and logos | The hard parts of FDE are judgment, people and reasoning, not project management | Proposed |
+| 2026-11-01 | Deep-work sprints with an hour budget; Obsidian-compatible recording | Focus is visible, and notes work in tools people already use | Proposed |
+| 2026-11-01 | The registry enforces WIP limits: 2 active projects, 1 active sprint | Prevents repo sprawl and unfinished work | Proposed |
+| 2026-11-01 | Portfolio site generated from evidence at level 2 or above | Showcase what's real, linked to proof | Proposed |
+| 2026-11-01 | Role packs, with FDE first; `shape-curriculum` for extensions | One method extends to any career direction | Proposed |
+| 2026-11-01 | Beaver acts as a living mentor: lifecycle support, stall patterns, fading scaffolding, visible mentor notes | The learner builds; Beaver nurtures growth without taking over | Proposed |
+| 2026-11-01 | Audience is anyone on five tracks (data, ML, AI, product, platform), AI-first | One method serves all forward-deployed work | Proposed |
+| 2026-11-01 | A learning-first contract for any agent: boundary, nudges, slop guards, `agent_policy` | People and craft first, automation second | Proposed |
+| 2026-11-01 | Learning space with concept notes, inquiries and a simplification ladder | Knowledge compounds in one place | Proposed |
+| 2026-11-01 | Deterministic progress check in core; LLM companion optional, any provider | Bookkeeping without a model; no lock-in | Proposed |
+| 2026-11-01 | One object per Markdown file, YAML frontmatter, `type.slug` IDs | Diffable and readable by any assistant; graph export possible later | Proposed |
+| 2026-11-01 | AGENTS.md + Agent Skills as the cross-tool base; CLAUDE.md imports AGENTS.md | Open formats with the widest support | Proposed |
+| 2026-11-01 | Beaver is read-only on project repos | Keeps project conventions and client boundaries intact | Proposed |
+| 2026-11-01 | Evidence levels 0–5 instead of proficiency scores | Qualitative claims that can be checked | Proposed |
+| 2026-11-01 | Agents write only to `generated/` | Learner records stay the learner's | Proposed |
+| 2026-11-01 | Praxis (data foundry) and Agent-Beaver (curation) stay out of v1 | Protect a narrow MVP | Proposed |
+
+### Sources
+
+- [AGENTS.md](https://agents.md/): format, nearest-file precedence, supported agents
+- [Agent Skills specification](https://agentskills.io/specification): SKILL.md structure, progressive disclosure, 500-line guidance
+- [Claude Code skills](https://code.claude.com/docs/en/skills): project skills in `.claude/skills/`, Agent Skills compatibility
+- [Claude Code memory](https://code.claude.com/docs/en/memory?os=0): CLAUDE.md importing AGENTS.md, Windows symlink note
