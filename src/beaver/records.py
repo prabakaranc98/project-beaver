@@ -237,6 +237,10 @@ RECORD_TYPES = {
 RECORD_LOCATIONS = ["learner/now.md", "learner/capabilities", "learning/concepts", "learning/inquiries",
                     "projects/briefs", "sprints", "evidence", "reflections"]
 
+# The learner's own folders: where their pages and [[wikilinks]] live. Method, docs and
+# tests in the same repo are not part of the workspace.
+WORKSPACE_FOLDERS = ["learner", "learning", "projects", "sprints", "evidence", "reflections"]
+
 
 def split_frontmatter(text):
     """(frontmatter dict, body) from a Markdown file that starts with a `---` YAML block."""

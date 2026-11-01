@@ -13,7 +13,7 @@ from pathlib import Path
 import yaml
 from pydantic import ValidationError
 
-from beaver.records import RECORD_LOCATIONS, RECORD_TYPES, Registry, split_frontmatter
+from beaver.records import RECORD_LOCATIONS, RECORD_TYPES, WORKSPACE_FOLDERS, Registry, split_frontmatter
 
 ID = re.compile(r"[a-z]+\.[a-z0-9][a-z0-9-]*")
 RESOLVABLE = set(RECORD_TYPES) | {"project"}  # domains, notes and reviews have no records yet
@@ -35,7 +35,7 @@ class Report:
 
     def render(self):
         if not self.problems:
-            return f"All {self.checked} records check out."
+            return f"All {self.checked} records check out." if self.checked else "No records yet."
         files = len({p.file for p in self.problems})
         lines = [f"{p.file}: {p.message}" for p in self.problems]
         lines.append(f"{len(self.problems)} problem{'s' * (len(self.problems) != 1)} in {files} "
@@ -126,7 +126,7 @@ def validate_workspace(root):
             if ref.split(".", 1)[0] in RESOLVABLE and ref not in ids:
                 report.problems.append(Problem(rel, "unresolved-id", ref, f"points to {ref}, which doesn't exist"))
 
-    pages = [p for p in root.rglob("*.md") if not any(part.startswith(".") for part in p.relative_to(root).parts)]
+    pages = [p for folder in WORKSPACE_FOLDERS if (root / folder).is_dir() for p in sorted((root / folder).rglob("*.md"))]
     names = {p.stem for p in pages}
     for path in sorted(pages):
         for target in sorted({t.strip() for t in WIKILINK.findall(path.read_text(encoding="utf-8"))}):

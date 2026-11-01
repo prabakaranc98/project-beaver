@@ -37,13 +37,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e . pytest jsonschema
 
-      - name: Validate example workspace
+      # In a learner's fork, "." is their own workspace, so a broken link or a
+      # missing claim is caught on push. Upstream, core/examples is the sample.
+      - name: Validate the workspace and the sample
         run: |
-          if [ -f tools/validate.py ]; then
-            python tools/validate.py core/examples
-          else
-            echo "tools/validate.py not built yet (#27), skipping"
-          fi
+          python tools/validate.py .
+          python tools/validate.py core/examples
 
       # Beaver's own tests; a learner's fork carries them (the root is the
       # template) but has no reason to run them.

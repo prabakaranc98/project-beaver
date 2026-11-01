@@ -69,6 +69,20 @@ def test_an_invalid_record_still_counts_as_existing(tmp_path):
     assert kinds == {("evidence/x.md", "schema")}
 
 
+def test_the_repo_root_is_a_clean_workspace():
+    # CI validates "." too, which in a learner's fork is their own workspace. Docs and
+    # fixtures in this repo quote [[wikilinks]] on purpose and must not count.
+    report = validate_workspace(REPO)
+    assert report.problems == [], report.render()
+
+
+def test_wikilinks_outside_the_workspace_folders_are_ignored(tmp_path):
+    write(tmp_path, "docs/notes.md", "See [[nowhere]].\n")
+    write(tmp_path, "learning/inbox.md", "See [[also-nowhere]].\n")
+    found = {(p.file, p.ref) for p in validate_workspace(tmp_path).problems}
+    assert found == {("learning/inbox.md", "also-nowhere")}
+
+
 def test_the_beaver_command_passes_on_the_example_and_fails_on_broken_links():
     runner = CliRunner()
     ok = runner.invoke(app, ["validate", str(REPO / "core" / "examples")])
