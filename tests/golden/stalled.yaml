@@ -1,0 +1,11 @@
+workspace: tests/fixtures/stalled
+as_of: 2026-11-24
+validate: []
+status:
+  inbox_captures: 6
+  aging_inquiries: [inquiry.idempotency-key-ttl]   # open more than 14 days
+  days_since_reflection: 18
+  unreviewed_commits: {project.crm-sync: 14}
+# The status test builds child/crm-sync at run time: 3 commits, the reviewed one, then 14 more.
+child_repos:
+  project.crm-sync: {commits_before_review: 3, commits_after_review: 14}
