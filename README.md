@@ -4,6 +4,18 @@
 
 > **Status: early build, not usable yet.** M0 · Foundations runs until the Nov 8, 2026 gate. Beaver is built in the open and dogfooded from day one: see the [milestones](https://github.com/prabakaranc98/project-beaver/milestones), [`docs/build-plan.md`](docs/build-plan.md) and [`docs/design.md`](docs/design.md).
 
+## Try it now
+
+From a clone of this repo, with [uv](https://docs.astral.sh/uv/) installed:
+
+```bash
+uvx --from . beaver validate core/examples                 # the sample workspace: all records check out
+uvx --from . beaver validate tests/fixtures/broken-links   # three planted problems, in plain words
+python bench/bench.py shell --workspace core/examples      # Claude Code in a sandbox with the sample workspace
+```
+
+The last line needs `OPENROUTER_API_KEY` in `.env`; see `CONTRIBUTING.md`.
+
 ## The loop
 
 Every piece of work runs through one loop. Review is the step that turns work into evidence, and Explain can only use what Review accepted.
