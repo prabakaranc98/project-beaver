@@ -15,7 +15,7 @@ Project Beaver is an open, forkable repository where anyone can build the craft 
 | **What changes over time** | The learner's records: goals, notes, questions, projects, evidence, reflections. The method stays stable. |
 | **What never changes** | The purpose: building judgment and agency, not producing more generated work. |
 | **Status** | v0.2 design. Nothing is built yet. |
-| **Next step** | A 4-week MVP tested with three pilot learners. |
+| **Next step** | A 4-week MVP tested by the author and one pilot learner. |
 
 The name fits the method: a beaver builds deliberately, one piece at a time, and what it builds reshapes its environment.
 
@@ -52,7 +52,7 @@ Beaver is for anyone who wants to own a real problem end to end with AI at the c
 | Mentors, TAs and team leads | A shared method for reviewing apprentices | Later |
 | The author | Dogfooding on real projects | Pilot zero |
 
-The first test group is three pilot learners plus the author.
+The first test group is the author plus one pilot learner. Two more pilot learners follow once the MVP gate passes.
 
 ## Why this repository should exist
 
@@ -987,15 +987,15 @@ The MVP ends at the highlighted gate. Accessories have no date and start only wh
 
 - [ ] Write CHARTER.md (one page) and AGENTS.md (under 80 lines)
 - [ ] Write the ontology schema, evidence levels, five track maps, seed capability map in `core/ontology/`
-- [ ] Write 10–15 seed FDE knowledge pages across ethos, pathos and logos in `core/knowledge/fde/`
-- [ ] Write templates: brief, review, reflection, evidence, capability, concept, inquiry, idea card, scorecard, test plan, now
+- [ ] Write five seed FDE knowledge pages in `core/knowledge/fde/`: one each for ethos, pathos and logos, plus two practice areas (10–15 pages after the MVP)
+- [ ] Write templates: brief, evidence, reflection, concept, inquiry, now (review, capability, idea card, scorecard and test plan come after the MVP)
 - [ ] Set up the learning space, Obsidian-ready: inbox, concepts, notes, inquiries, resources, sprints
 - [ ] Write the six v1 skills, onboard, `orient`, `capture`, `frame-challenge`, `review-evidence`, `reflect`
 - [ ] Build `tools/status` (the progress check) and `tools/validate` (schema, IDs, evidence fields, core diff), exposed as the first beaver CLI commands: beaver, capture, sprint, validate
 - [ ] Add the Claude Code adapter: CLAUDE.md, `.claude/skills/`, permission deny rules
 - [ ] Write a worked example workspace in `core/examples/`
 - [ ] Run the author's own full loop on one real project
-- [ ] Onboard three pilot learners from different tracks, then hold a 30-minute debrief with each at week 4
+- [ ] Onboard one pilot learner, then hold a 30-minute debrief at week 4 (two more, from different tracks, after the MVP gate)
 
 **Explicitly not in the MVP:** a local UI, a graph view, MCP integrations, project creation scripts, a second adapter, publishing, the learning companion, or a curation agent. The companion is the first accessory to build once the MVP gate passes.
 
@@ -1046,7 +1046,7 @@ The biggest risk is that Beaver becomes another system to maintain instead of a 
 
 **Open questions**
 
-- [ ] Who are the three pilot learners, which tracks are they on, and what will each build?
+- [ ] Who is the first pilot learner, which track are they on, and what will they build? Who are the two after the MVP gate?
 - [ ] Who writes the seed FDE knowledge pages, and who reviews them before they ship?
 - [ ] What is the default sprint size: 15 or 20 hours? Should hours be logged by hand or by a timer?
 - [ ] Should concepts use plain YAML now, or align to SKOS or JSON-LD from day one?
@@ -1076,7 +1076,7 @@ Read the doc through once with these questions, then record each settled choice 
 **Review checklist**
 
 - [ ] After the Summary, can a newcomer say what Beaver is in one sentence?
-- [ ] Does every core feature trace back to one of the five principles?
+- [ ] Does every core feature trace back to one of the six principles?
 - [ ] Does anything in the core depend on an accessory?
 - [ ] Is each "enforced" claim backed by a permission or the validator, not just an instruction?
 - [ ] Could one person build the MVP in 4 weeks part-time?

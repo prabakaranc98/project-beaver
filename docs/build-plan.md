@@ -31,33 +31,33 @@ v0.1.0 is the first gate that matters: it ships only if the dogfood loop shows a
 
 ## Issue backlog
 
-Twenty-three issues seed the repo, and the GitHub kit creates them in one run. Sizes are S (under 2 hours), M (half a day) and L (a day or more).
+Twenty-three issues seed the repo, and the GitHub kit creates them in one run. On GitHub they are #22–#44, in this order. Sizes are S (under 2 hours), M (half a day) and L (a day or more).
 
 | # | Issue | Milestone | Labels | Size | Done when |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Scaffold the repo: folders, README, LICENSE | M0 | chore | S | Tree matches the design doc; license chosen |
-| 2 | Write CHARTER.md | M0 | docs, core | S | One page; passes the illusion test |
-| 3 | Write AGENTS.md and a CLAUDE.md that imports it | M0 | docs, adapter | S | Under 80 lines; Claude Code shows it at session start |
-| 4 | Define record schemas (capability, concept, inquiry, evidence, brief, sprint, registry) | M0 | feat, core | M | Schemas in `core/ontology/`; example records validate |
-| 5 | Write templates: brief, evidence, reflection, concept, inquiry, now | M0 | docs, core | S | Each template validates against its schema when filled |
-| 6 | Build `tools/validate`: schema, ID resolution, wikilinks | M0 | feat, core | M | Fails on a broken link or a missing claim; passes on the example |
-| 7 | Add CI: validate + unit tests on every PR | M0 | chore, test | S | A red PR blocks merge |
-| 8 | Build an example workspace as test fixtures | M0 | test | M | Used by unit and snapshot tests |
-| 9 | Build `tools/status` v0: inbox, aging inquiries, unreviewed commits, reflection gap | M1 | feat, core | M | Snapshot test matches expected output on the fixture |
-| 10 | Skill: `onboard` | M1 | feat, skills | M | Seven questions; resume lines land as level-0 claims |
-| 11 | Skill: `frame-challenge` | M1 | feat, skills | M | Brief has non-goals and a testable done-when |
-| 12 | Skill: `review-evidence` | M1 | feat, skills | M | Every observation has a file or commit reference; one question; at most two actions |
-| 13 | Skill eval checklist and scenarios for the three skills | M1 | test, skills | M | Each skill passes its boundary checks on three scenarios |
-| 14 | Write five seed knowledge pages | M1 | docs, knowledge | L | One page per pillar plus two practice areas, in the page format |
-| 15 | Dogfood: register one real project and run the full loop | M1 | dogfood | L | Brief → sprint → review → reflection, all in the workspace |
-| 16 | Blind brief review: before and after | M1 | dogfood | S | A reviewer scores both briefs without knowing which is which |
-| 17 | Release v0.1.0 | M1 | release | S | Tag, changelog, release notes |
-| 18 | Package as a Claude Code plugin with a SessionStart hook | M2 | feat, plugin | M | Installs from the repo's marketplace on a clean machine |
-| 19 | Skills: `capture`, `orient`, `reflect` | M2 | feat, skills | M | Each passes its eval checklist |
-| 20 | Thin `beaver` CLI: `beaver`, `capture`, `sprint`, `validate` | M2 | feat, cli | M | Works offline; zero tokens used |
-| 21 | Onboard one pilot learner, with weekly check-ins | M2 | dogfood | M | Pilot finishes onboarding and starts a sprint |
-| 22 | Pilot debrief and go/kill decision | M2 | dogfood | S | Decision and reasons written in DECISIONS.md |
-| 23 | Release v0.2.0 | M2 | release | S | Tag, changelog, upgrade notes |
+| [#22](https://github.com/prabakaranc98/project-beaver/issues/22) | Scaffold the repo: folders, README, LICENSE | M0 | chore | S | Tree matches the design doc; license chosen |
+| [#23](https://github.com/prabakaranc98/project-beaver/issues/23) | Write CHARTER.md | M0 | docs, core | S | One page; passes the illusion test |
+| [#24](https://github.com/prabakaranc98/project-beaver/issues/24) | Write AGENTS.md and a CLAUDE.md that imports it | M0 | docs, adapter | S | Under 80 lines; Claude Code shows it at session start |
+| [#25](https://github.com/prabakaranc98/project-beaver/issues/25) | Define record schemas (capability, concept, inquiry, evidence, brief, sprint, registry) | M0 | feat, core | M | Schemas in `core/ontology/`; example records validate |
+| [#26](https://github.com/prabakaranc98/project-beaver/issues/26) | Write templates: brief, evidence, reflection, concept, inquiry, now | M0 | docs, core | S | Each template validates against its schema when filled |
+| [#27](https://github.com/prabakaranc98/project-beaver/issues/27) | Build `tools/validate`: schema, ID resolution, wikilinks | M0 | feat, core | M | Fails on a broken link or a missing claim; passes on the example |
+| [#28](https://github.com/prabakaranc98/project-beaver/issues/28) | Add CI: validate + unit tests on every PR | M0 | chore, test | S | A red PR blocks merge |
+| [#29](https://github.com/prabakaranc98/project-beaver/issues/29) | Build an example workspace as test fixtures | M0 | test | M | Used by unit and snapshot tests |
+| [#30](https://github.com/prabakaranc98/project-beaver/issues/30) | Build `tools/status` v0: inbox, aging inquiries, unreviewed commits, reflection gap | M1 | feat, core | M | Snapshot test matches expected output on the fixture |
+| [#31](https://github.com/prabakaranc98/project-beaver/issues/31) | Skill: `onboard` | M1 | feat, skills | M | Seven questions; resume lines land as level-0 claims |
+| [#32](https://github.com/prabakaranc98/project-beaver/issues/32) | Skill: `frame-challenge` | M1 | feat, skills | M | Brief has non-goals and a testable done-when |
+| [#33](https://github.com/prabakaranc98/project-beaver/issues/33) | Skill: `review-evidence` | M1 | feat, skills | M | Every observation has a file or commit reference; one question; at most two actions |
+| [#34](https://github.com/prabakaranc98/project-beaver/issues/34) | Skill eval checklist and scenarios for the three skills | M1 | test, skills | M | Each skill passes its boundary checks on three scenarios |
+| [#35](https://github.com/prabakaranc98/project-beaver/issues/35) | Write five seed knowledge pages | M1 | docs, knowledge | L | One page per pillar plus two practice areas, in the page format |
+| [#36](https://github.com/prabakaranc98/project-beaver/issues/36) | Dogfood: register one real project and run the full loop | M1 | dogfood | L | Brief → sprint → review → reflection, all in the workspace |
+| [#37](https://github.com/prabakaranc98/project-beaver/issues/37) | Blind brief review: before and after | M1 | dogfood | S | A reviewer scores both briefs without knowing which is which |
+| [#38](https://github.com/prabakaranc98/project-beaver/issues/38) | Release v0.1.0 | M1 | release | S | Tag, changelog, release notes |
+| [#39](https://github.com/prabakaranc98/project-beaver/issues/39) | Package as a Claude Code plugin with a SessionStart hook | M2 | feat, plugin | M | Installs from the repo's marketplace on a clean machine |
+| [#40](https://github.com/prabakaranc98/project-beaver/issues/40) | Skills: `capture`, `orient`, `reflect` | M2 | feat, skills | M | Each passes its eval checklist |
+| [#41](https://github.com/prabakaranc98/project-beaver/issues/41) | Thin `beaver` CLI: `beaver`, `capture`, `sprint`, `validate` | M2 | feat, cli | M | Works offline; zero tokens used |
+| [#42](https://github.com/prabakaranc98/project-beaver/issues/42) | Onboard one pilot learner, with weekly check-ins | M2 | dogfood | M | Pilot finishes onboarding and starts a sprint |
+| [#43](https://github.com/prabakaranc98/project-beaver/issues/43) | Pilot debrief and go/kill decision | M2 | dogfood | S | Decision and reasons written in DECISIONS.md |
+| [#44](https://github.com/prabakaranc98/project-beaver/issues/44) | Release v0.2.0 | M2 | release | S | Tag, changelog, upgrade notes |
 
 Issues labeled `dogfood-friction` are added continuously and triaged every Sunday.
 
@@ -83,7 +83,7 @@ Beaver has four layers of tests, from cheap and automatic to slow and human. The
 | Skill evals | Each skill against three scenarios: does it write only to `generated/`, cite files, end with one action, stay under its token cap? | A checklist run by hand in M1; headless runs in a scheduled job later | Before each release |
 | Dogfood acceptance | Does Beaver actually help? | Build ratio, blind brief review, friction count, pilot debrief | At each milestone gate |
 
-**Fixture workspaces to build in issue #8:** `healthy` (everything valid), `broken-links` (dangling IDs and wikilinks), `stalled` (aging inquiries, unreviewed commits, overdue reflection) and `over-limit` (three active projects, two active sprints). Each one has expected `validate` and `status` outputs checked into `tests/golden/`.
+**Fixture workspaces to build in [#29](https://github.com/prabakaranc98/project-beaver/issues/29):** `healthy` (everything valid), `broken-links` (dangling IDs and wikilinks), `stalled` (aging inquiries, unreviewed commits, overdue reflection) and `over-limit` (three active projects, two active sprints). Each one has expected `validate` and `status` outputs checked into `tests/golden/`.
 
 ## Releases
 
