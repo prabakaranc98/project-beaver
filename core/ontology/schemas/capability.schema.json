@@ -1,0 +1,62 @@
+{
+  "additionalProperties": false,
+  "description": "Something the learner wants to be able to do. Lives in learner/capabilities/.",
+  "properties": {
+    "id": {
+      "pattern": "^(capability)\\.[a-z0-9][a-z0-9-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "domain": {
+      "anyOf": [
+        {
+          "pattern": "^(domain)\\.[a-z0-9][a-z0-9-]*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Domain"
+    },
+    "requires": {
+      "default": [],
+      "items": {
+        "pattern": "^(concept)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "Requires",
+      "type": "array"
+    },
+    "evidence": {
+      "default": [],
+      "items": {
+        "pattern": "^(evidence)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "status": {
+      "default": "exploring",
+      "enum": [
+        "exploring",
+        "practising",
+        "demonstrated"
+      ],
+      "title": "Status",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "title"
+  ],
+  "title": "Capability",
+  "type": "object"
+}

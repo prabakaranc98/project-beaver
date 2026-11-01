@@ -1,0 +1,20 @@
+# projects/registry.yaml: the work-in-progress limits and every connected project.
+limits:
+  active_projects: 2
+  ideas_under_evaluation: 5
+  active_sprints: 1
+  days_since_review: 30
+projects:
+  - id: project.crm-sync
+    source: { type: github, repository: me/crm-sync, path: ~/code/crm-sync }
+    relationship: beaver-started      # beaver-started | existing
+    access: read-only
+    state: active                     # active | paused | closed
+    practises: [capability.api-integration]
+    brief: brief.crm-sync-retries
+    review:
+      trigger: manual
+      last_reviewed_commit: null
+    privacy:
+      classification: private          # public | private | client-confidential
+      external_model_use: allowed      # allowed | approval-required | forbidden

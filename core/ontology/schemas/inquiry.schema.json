@@ -1,0 +1,70 @@
+{
+  "additionalProperties": false,
+  "description": "A question the learner is pursuing. Lives in learning/inquiries/.",
+  "properties": {
+    "id": {
+      "pattern": "^(inquiry)\\.[a-z0-9][a-z0-9-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "question": {
+      "minLength": 1,
+      "title": "Question",
+      "type": "string"
+    },
+    "opened": {
+      "format": "date",
+      "title": "Opened",
+      "type": "string"
+    },
+    "status": {
+      "default": "open",
+      "enum": [
+        "open",
+        "answered",
+        "evolved",
+        "dropped"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "about": {
+      "default": [],
+      "items": {
+        "pattern": "^(concept)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "About",
+      "type": "array"
+    },
+    "answered_by": {
+      "default": [],
+      "items": {
+        "pattern": "^(note|evidence)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "Answered By",
+      "type": "array"
+    },
+    "evolved_into": {
+      "anyOf": [
+        {
+          "pattern": "^(inquiry)\\.[a-z0-9][a-z0-9-]*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Evolved Into"
+    }
+  },
+  "required": [
+    "id",
+    "question",
+    "opened"
+  ],
+  "title": "Inquiry",
+  "type": "object"
+}
