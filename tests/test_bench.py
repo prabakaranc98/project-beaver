@@ -2,6 +2,7 @@
 
 import importlib.util
 import json
+import subprocess
 from pathlib import Path
 
 spec = importlib.util.spec_from_file_location("bench", Path(__file__).parent.parent / "bench" / "bench.py")
@@ -68,6 +69,32 @@ def test_sandbox_never_receives_env_files(tmp_path):
     sandbox = bench.make_sandbox(workspace)
     copied = sorted(str(p.relative_to(sandbox)) for p in sandbox.rglob("*") if ".git" not in p.parts)
     assert copied == [".env.example", "notes.md", "sub"]
+
+
+def test_headless_runs_never_read_the_callers_stdin(monkeypatch, tmp_path):
+    # A demo loop once fed its remaining prompts to `claude -p` through stdin.
+    seen = {}
+
+    def fake_run(cmd, **kwargs):
+        seen.update(kwargs)
+        return subprocess.CompletedProcess(cmd, 0, stdout="", stderr="")
+
+    monkeypatch.setattr(bench, "openrouter_key", lambda: "sk-or-test")
+    monkeypatch.setattr(bench, "openrouter_usage", lambda key: None)
+    monkeypatch.setattr(bench, "RUNS", tmp_path / "runs")
+    monkeypatch.setattr(bench.subprocess, "run", fake_run)
+    monkeypatch.setattr(bench, "changed_files", lambda sandbox: [])
+    monkeypatch.setattr(bench, "make_sandbox", lambda workspace=None: tmp_path)
+    monkeypatch.setattr(bench, "REPO", tmp_path)
+    bench.headless("hello", "haiku", 0.1)
+    assert seen.get("stdin") is subprocess.DEVNULL
+
+
+def test_a_fork_carries_agents_md_and_the_learners_records():
+    fork = bench.fork_of(Path(__file__).parent.parent / "core" / "examples")
+    assert (fork / "AGENTS.md").is_file() and (fork / "CLAUDE.md").is_file()
+    assert (fork / "learner" / "now.md").is_file() and (fork / "evidence" / "crm-sync-retries.md").is_file()
+    assert not (fork / ".env").exists() and not list(fork.rglob(".gitkeep"))
 
 
 def test_final_result_takes_the_last_result_event():

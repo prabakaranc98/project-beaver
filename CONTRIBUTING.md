@@ -36,8 +36,8 @@ A bug fix comes with a test that fails before the fix.
 ```bash
 cp .env.example .env              # add OPENROUTER_API_KEY; .env is git-ignored
 python bench/bench.py doctor      # route works, isolation holds
-python bench/bench.py shell --workspace core/examples       # hands-on session
-python bench/bench.py run "Run the progress check" --workspace core/examples
+python bench/bench.py shell --workspace core/examples --fork  # hands-on session in a learner fork
+python bench/bench.py run "My retry tests pass now." --workspace core/examples --fork
 python bench/bench.py run "…" -- --plugin-dir .              # test as a plugin (#39)
 ```
 
