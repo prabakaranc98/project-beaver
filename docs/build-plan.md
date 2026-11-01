@@ -25,7 +25,26 @@ Three milestones and two releases over four weeks. Each milestone closes only wh
 | M1 · Dogfood loop | One real project goes through a full loop with Beaver | Three v1 skills used for real; progress check runs at session start; 5 knowledge pages; one review + one reflection; before/after briefs sent for blind review | v0.1.0 |
 | M2 · Pilot | Someone other than the author uses it | Claude Code plugin installs cleanly; one pilot learner onboarded and finishes a loop; debrief held; go/kill decision recorded | v0.2.0 |
 
-> **Diagram not in this copy:** Beaver build plan · 3 milestones, 2 releases, Nov 2026. See issue #1.
+```mermaid
+---
+title: "The first release comes after one week of dogfooding"
+---
+flowchart LR
+    subgraph plan["Beaver build plan by week, Nov 2026"]
+        direction LR
+        m0(["M0 · Foundations<br/>Nov 2 to Nov 8"])
+        m1(["M1 · Dogfood loop<br/>Nov 9 to Nov 15"])
+        v01{"<b>Release v0.1.0<br/>Nov 15</b>"}
+        m2(["M2 · Pilot<br/>Nov 16 to Nov 29"])
+        v02{"Release v0.2.0<br/>Nov 29"}
+    end
+
+    m0 --> m1 --> v01 --> m2 --> v02
+
+    classDef accent fill:#2f6fdf,fill-opacity:0.12,stroke:#2f6fdf,stroke-width:2px
+    class v01 accent
+    style plan fill:none,stroke:none
+```
 
 v0.1.0 is the first gate that matters: it ships only if the dogfood loop shows a better brief.
 

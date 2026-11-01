@@ -96,7 +96,25 @@ Six principles decide every design choice. When a feature conflicts with one, th
 
 Every piece of work runs through one loop: Orient, Frame, Build, Review, Reflect, then back to Orient. Explain sits outside the loop and draws only on reviewed evidence.
 
-> **Diagram not in this copy:** the Beaver work loop · 5 steps + Explain. See issue #1.
+```mermaid
+---
+title: "Every cycle ends in a reviewed claim, not just a commit"
+---
+flowchart LR
+    orient["<b>Orient</b><br/>Read now.md,<br/>pick next action"]
+    frame["<b>Frame</b><br/>Brief: users,<br/>outcome, scope"]
+    build["<b>Build</b><br/>In its own repo,<br/>in chosen mode"]
+    review["<b>Review</b><br/>Claims, refs and<br/>evidence levels"]
+    reflect["<b>Reflect</b><br/>Learner writes<br/>what changed"]
+    explain["<b>Explain</b><br/>Case study or demo<br/>from reviewed evidence"]
+
+    orient --> frame --> build --> review --> reflect
+    reflect -->|"next cycle: update now.md"| orient
+    review -.->|"level 2+ evidence only"| explain
+
+    classDef accent fill:#2f6fdf,fill-opacity:0.12,stroke:#2f6fdf,stroke-width:2px
+    class review accent
+```
 
 Review is the step that turns work into evidence. Explain can only use what Review accepted.
 
@@ -161,7 +179,26 @@ The learner does all of the work. Beaver works behind the screen, thinking about
 
 Beaver has four layers, and only the first two are required. The core method is maintained upstream. The learner workspace is owned by the learner. Adapters translate both for a specific assistant. Accessories are optional.
 
-> **Diagram not in this copy:** Beaver architecture · 4 layers + external project repos. See issue #1.
+```mermaid
+---
+title: "Only the core method and learner workspace are required"
+---
+flowchart TB
+    acc["<b>Accessories</b><br/><i>optional</i><br/>Learning companion, MCP servers, local UI, publishing"]
+    adapters["<b>Assistant adapters</b><br/><i>one per assistant</i><br/>AGENTS.md, CLAUDE.md, skill paths, permission rules"]
+    learner["<b>Learner workspace</b><br/><i>learner-owned</i><br/>now.md, notes, inquiries, capabilities, evidence"]
+    core["<b>Core method</b><br/><i>pulled from upstream</i><br/>Charter, principles, ontology, skills, templates"]
+    repos["<b>Project repos</b><br/>Real engineering work<br/>Own conventions<br/>Never edited by Beaver"]
+
+    acc ~~~ adapters ~~~ learner ~~~ core
+    learner -->|"context packet"| repos
+    repos -->|"read-only review"| learner
+
+    classDef optional stroke-dasharray:5 4
+    classDef accent fill:#2f6fdf,fill-opacity:0.12,stroke:#2f6fdf,stroke-width:2px
+    class acc optional
+    class learner accent
+```
 
 The two arrows are the only ways Beaver touches a project: it hands over context and reads back evidence.
 
@@ -173,7 +210,46 @@ The two arrows are the only ways Beaver touches a project: it hands over context
 
 Beaver should run as a harness, but a thin one. The `beaver` CLI owns state, lifecycle, modes and checks, and it lives in the terminal where the learner already works. The learner's coding assistant stays the agent. Beaver never runs its own agent loop, because that would compete with tools that improve every month and pull effort away from what only Beaver has: the method, the ontology and the learning-first contract.
 
-> **Diagram not in this copy:** Beaver harness · one core library, four thin clients, files as truth. See issue #1.
+```mermaid
+---
+title: "One core, thin clients: the files stay the source of truth"
+---
+flowchart LR
+    subgraph who["Who or what"]
+        terminal["Learner at the terminal"]
+        browser["Learner in a browser"]
+        agents["Personal agents"]
+        model["Model API, any provider"]
+        assistant["Coding assistant"]
+    end
+    subgraph clients["Thin clients"]
+        cli["<b>beaver (CLI)</b>"]
+        ui["<b>beaver ui</b>"]
+        mcp["<b>beaver mcp (read-only)</b>"]
+        companion["<b>Companion runner</b>"]
+    end
+    corelib["<b>Core library</b><br/>Typed graph of all records<br/>status, validate, mentor<br/>WIP limits, sprint math"]
+    files["<b>Workspace files</b><br/>Markdown + YAML in git,<br/>the source of truth"]
+
+    terminal --> cli
+    browser --> ui
+    agents --> mcp
+    model ~~~ companion
+    companion --> model
+    cli --> corelib
+    ui --> corelib
+    mcp --> corelib
+    companion --> corelib
+    corelib <--> files
+    assistant -->|"reads AGENTS.md, skills and files"| files
+
+    classDef accent fill:#2f6fdf,fill-opacity:0.12,stroke:#2f6fdf,stroke-width:2px
+    classDef tint fill:#888888,fill-opacity:0.15
+    class corelib accent
+    class files tint
+    style who fill:none,stroke:none
+    style clients fill:none,stroke:none
+```
 
 The coding assistant reads the workspace directly; every Beaver client goes through the same core, so the CLI, the UI and any agent always see the same state.
 
@@ -383,7 +459,26 @@ I haven't yet tested it against a real timeout.
 
 Everything the learner studies lands in one place and links to everything else, so understanding builds on itself instead of scattering across tabs, chats and notebooks. The learner can see how concepts connect, which questions are still open, and how a question changed over time.
 
-> **Diagram not in this copy:** how learning compounds · capture to evidence and back. See issue #1.
+```mermaid
+---
+title: "Every note and question feeds the next project"
+---
+flowchart LR
+    capture["<b>Capture</b><br/>Link, thought or<br/>half-question"]
+    concept["<b>Concept note</b><br/>Own words, three<br/>depths, linked"]
+    inquiry["<b>Inquiry</b><br/>Open question<br/>with its history"]
+    use["<b>Use in a project</b><br/>Concept meets<br/>real constraints"]
+    evidence["<b>Evidence</b><br/>Claim backed<br/>by an artifact"]
+
+    capture --> concept
+    capture --> inquiry
+    concept <-->|"raises / answers"| inquiry
+    concept --> use --> evidence
+    evidence -->|"closes or evolves a question"| inquiry
+
+    classDef accent fill:#2f6fdf,fill-opacity:0.12,stroke:#2f6fdf,stroke-width:2px
+    class concept accent
+```
 
 The loop back from evidence to inquiry is the compounding: real work answers old questions and raises better ones.
 
@@ -448,7 +543,29 @@ How long should an API keep idempotency keys, and what breaks if it's too short?
 
 Beaver ships a body of knowledge about how forward-deployed work is actually done, not only how to manage projects. It borrows Aristotle's three modes as a lens. Ethos is the character the engineer brings, pathos is the people and their situation, and logos is the reasoning and technique. It lives in `core/knowledge/fde/` as short playbook pages that the learner reads, questions and links to from their own notes.
 
-> **Diagram not in this copy:** FDE knowledge base · ethos, pathos, logos on a base of practice. See issue #1.
+```mermaid
+---
+title: "Three pillars hold up the craft of forward-deployed work"
+---
+flowchart TB
+    goal["<b>Own a real problem end to end, with AI at the center</b>"]
+    ethos["<b>Ethos</b><br/><i>Who you are</i><br/>Own outcomes, not tickets<br/>Be honest about uncertainty<br/>Done = tested + explained"]
+    pathos["<b>Pathos</b><br/><i>Who they are</i><br/>Map stakeholders, incentives<br/>Interview before building<br/>Speak to execs and operators"]
+    logos["<b>Logos</b><br/><i>How you reason</i><br/>Find and define the problem<br/>Think in systems and failures<br/>Build, evaluate, draw it"]
+    practice["Practice: identify · define · shape · build · evaluate · communicate · illustrate"]
+
+    goal --- ethos
+    goal --- pathos
+    goal --- logos
+    ethos --- practice
+    pathos --- practice
+    logos --- practice
+
+    classDef accent fill:#2f6fdf,fill-opacity:0.12,stroke:#2f6fdf,stroke-width:2px
+    classDef tint fill:#888888,fill-opacity:0.15
+    class goal accent
+    class practice tint
+```
 
 The pillars hold the knowledge; the practice areas underneath are where the learner turns it into skill, one project at a time.
 
@@ -979,7 +1096,27 @@ One honest limit: anyone who forks Beaver can change anything. These safeguards 
 
 Beaver is built in four stages, and no stage starts until the one before it passes its gate. The first two stages are the 4-week MVP.
 
-> **Diagram not in this copy:** Beaver roadmap · 4 stages, 3 gates. See issue #1.
+```mermaid
+---
+title: "The MVP is two stages; nothing later starts before its gate"
+---
+flowchart LR
+    subgraph mvp["<b>4-week MVP</b>"]
+        s0["<b>Prove the method</b><br/><i>Weeks 1–2</i><br/>Charter, ontology,<br/>templates, 6 skills<br/>Author runs a loop"]
+        g0{"Gate: author finishes<br/>one full loop"}
+        s1["<b>Pilot</b><br/><i>Weeks 3–4</i><br/>Claude Code plugin<br/>beaver CLI: status<br/>One pilot learner"]
+    end
+    g1{"<b>Gate: every pilot<br/>learner closes a loop</b>"}
+    s2["<b>Connect projects</b><br/><i>After the MVP</i><br/>Registry, packets<br/>start-project skill<br/>Second adapter"]
+    g2{"Gate: skills behave<br/>alike in two tools"}
+    s3["<b>Accessories</b><br/><i>Only on real need</i><br/>beaver ui dashboard<br/>Read-only MCP server<br/>Companion, publishing"]
+
+    s0 --- g0 --- s1 --- g1 --- s2 --- g2 --- s3
+
+    classDef accent fill:#2f6fdf,fill-opacity:0.12,stroke:#2f6fdf,stroke-width:2px
+    class g1 accent
+    style mvp fill:none,stroke:#2f6fdf,stroke-width:2px
+```
 
 The MVP ends at the highlighted gate. Accessories have no date and start only when two or more learners ask for the same thing.
 
