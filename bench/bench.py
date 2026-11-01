@@ -75,11 +75,17 @@ def instruction_files_above(path):
     return found
 
 
+def skip_when_copying(_folder, names):
+    """Never carry secrets or local state into a sandbox; .env.example holds no values."""
+    local = {".git", ".bench", ".venv", "__pycache__"}
+    return {n for n in names if n in local or n == ".env" or (n.startswith(".env.") and n != ".env.example")}
+
+
 def make_sandbox(workspace=None):
     """A throwaway git repo in the system temp dir, seeded from `workspace` if given."""
     sandbox = Path(tempfile.mkdtemp(prefix="beaver-sandbox-"))
     if workspace:
-        shutil.copytree(workspace, sandbox, dirs_exist_ok=True, ignore=shutil.ignore_patterns(".git"))
+        shutil.copytree(workspace, sandbox, dirs_exist_ok=True, ignore=skip_when_copying)
     git = ["git", "-C", str(sandbox), "-c", "user.name=bench", "-c", "user.email=bench@localhost"]
     subprocess.run(git + ["init", "-q"], check=True)
     subprocess.run(git + ["add", "-A"], check=True)

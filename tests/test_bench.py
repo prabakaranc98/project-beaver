@@ -59,6 +59,17 @@ def test_sandbox_reports_changes_and_boundary_violations(tmp_path):
     assert bench.outside_generated(changed) == ["notes/a.md"]
 
 
+def test_sandbox_never_receives_env_files(tmp_path):
+    workspace = tmp_path / "ws"
+    (workspace / "sub").mkdir(parents=True)
+    for name in (".env", ".env.local", ".env.example", "sub/.env", "notes.md"):
+        (workspace / name).write_text("x\n")
+    (workspace / ".bench" / "runs").mkdir(parents=True)
+    sandbox = bench.make_sandbox(workspace)
+    copied = sorted(str(p.relative_to(sandbox)) for p in sandbox.rglob("*") if ".git" not in p.parts)
+    assert copied == [".env.example", "notes.md", "sub"]
+
+
 def test_final_result_takes_the_last_result_event():
     lines = ["not json", json.dumps({"type": "system"}), json.dumps({"type": "result", "result": "first"}),
              json.dumps({"type": "result", "result": "ok", "total_cost_usd": 0.01})]
