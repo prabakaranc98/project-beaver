@@ -1,0 +1,66 @@
+{
+  "additionalProperties": false,
+  "description": "learner/now.md: the single session entry point; assistants follow only what it links.",
+  "properties": {
+    "id": {
+      "pattern": "^(now)\\.[a-z0-9][a-z0-9-]*$",
+      "title": "Id",
+      "type": "string"
+    },
+    "mode": {
+      "default": "hint",
+      "enum": [
+        "socratic",
+        "hint",
+        "example",
+        "pair",
+        "delegate"
+      ],
+      "title": "Mode",
+      "type": "string"
+    },
+    "focus": {
+      "anyOf": [
+        {
+          "pattern": "^(brief)\\.[a-z0-9][a-z0-9-]*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Focus"
+    },
+    "capabilities": {
+      "default": [],
+      "items": {
+        "pattern": "^(capability)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "maxItems": 3,
+      "title": "Capabilities",
+      "type": "array"
+    },
+    "questions": {
+      "default": [],
+      "items": {
+        "pattern": "^(inquiry)\\.[a-z0-9][a-z0-9-]*$",
+        "type": "string"
+      },
+      "title": "Questions",
+      "type": "array"
+    },
+    "next_step": {
+      "minLength": 1,
+      "title": "Next Step",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "next_step"
+  ],
+  "title": "Now",
+  "type": "object"
+}

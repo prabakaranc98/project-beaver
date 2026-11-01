@@ -138,6 +138,26 @@ class Sprint(Record):
     status: Literal["planned", "active", "closed"] = "planned"
 
 
+class Reflection(Record):
+    """What changed in understanding and what remains open. Written by the learner. Lives in reflections/."""
+
+    id: ref("reflection")
+    date: date
+    links: list[ref("brief", "sprint", "project", "capability", "concept", "inquiry", "evidence")] = []
+    next_action: str = Field(min_length=1)
+
+
+class Now(Record):
+    """learner/now.md: the single session entry point; assistants follow only what it links."""
+
+    id: ref("now")
+    mode: Assistance = "hint"
+    focus: BriefRef | None = None
+    capabilities: list[CapabilityRef] = Field(default=[], max_length=3)
+    questions: list[ref("inquiry")] = []
+    next_step: str = Field(min_length=1)
+
+
 class Source(Record):
     type: Literal["github", "local"]
     repository: str | None = None
@@ -209,6 +229,8 @@ RECORD_TYPES = {
     "evidence": Evidence,
     "brief": Brief,
     "sprint": Sprint,
+    "reflection": Reflection,
+    "now": Now,
 }
 
 
