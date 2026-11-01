@@ -38,41 +38,14 @@ Learners who feel the urgency to show work but find it hard to start. Their time
 | Nudges | Return, Explain, Connect, Stretch and Notice. Each is one step on the learner's own file, within the weekly limit. | 4, 5 |
 | Lab and pilots | Simulated learners plus a separate grader that rewards learning; then real people. | 8 |
 
-## The agent's moves
+## How the agent helps
 
-TutorMoments sorts tutor moves into two directions, which Beaver adopts as its move vocabulary. **Scaffolding** is temporary support that makes the work more accessible. **Pushing for rigor** raises the demand when the learner is ready. **Over-scaffolding** is the failure between them: lowering the demand more than the moment needs.
+Beaver's agent, skills and nudges diagnose before they help, then scaffold, push for rigor or hold back. The move vocabulary and the moment-by-moment table live in [`core/principles/moves.md`](../core/principles/moves.md), and the voice rules in [`core/principles/voice.md`](../core/principles/voice.md). Those are the files skills and agents read, and they travel with every learner's fork.
 
-| Scaffolding: more support | Pushing for rigor: more demand |
-| --- | --- |
-| Guiding questions that funnel toward an answer | Ask the learner to explain or justify their reasoning |
-| Break the work into smaller steps | Step back and hand the work over |
-| Explain or model, co-solving | Offer a harder variation |
-| A different representation or analogy | Ask them to check their own work or rate their confidence |
-| A hint that narrows the options | |
-| Supply the answer or a step | |
-
-Three consequences for Beaver:
-
-- **Funnelling questions are scaffolding, not rigor.** Step-by-step guided questions do the thinking in small pieces, so they don't count as making the learner think. This affects the design doc's "Socratic" assistance mode: asking questions only becomes rigor when the questions demand the learner's own reasoning.
-- **Encouragement is not a move.** Affirmations and check-ins are neutral. They are welcome alongside the right move but never instead of it.
-- **Name both failure modes in the agent's instructions.** Without that, language models default to helpfulness: they over-scaffold and almost never push for rigor.
-
-## What the agent does, moment by moment
-
-| What Beaver sees | Direction | What it does | What it never does |
-| --- | --- | --- | --- |
-| The learner hasn't tried yet, or says "I've got it" | Hold back | Hands the work over and waits | Starts helping before they have shown what they can do |
-| Stuck: a repeated error, no artifact for 30+ minutes, or a request for help | Scaffold | Gives the smallest help that unblocks: a self-check first, then a narrowing hint, then a different representation, then smaller steps. The learner does each step. | Co-solves, or supplies the answer by default |
-| A correct answer, or breezing through | Push | Asks why it works, offers a harder variation, or asks them to check their own work | Accepts the correct answer and moves on |
-| An error | Push, then scaffold | Asks them to check it first ("run it with a timeout of 0; what happens?") | Supplies the correction straight away |
-| Signals getting worse: more errors, frustration, "make it smaller" twice | Switch | Changes direction to a smaller step or more scaffolding | Keeps pushing the same way |
-| In flow: commits landing, no questions | Hold back | Stays quiet | Interrupts with nudges or praise |
-| "Just tell me", under time pressure | Scaffold, honestly | Shows a worked example, tags it, and makes explaining it the next step | Lets the example count as mastery |
-| Delegated work over half of the last two weeks | Push | Asks them to explain one delegated change before helping further | Refuses help outright |
-| Something clicked | Push, warmly | Names it specifically, then offers the next stretch | Gives generic praise or a streak |
-| A question open 2+ weeks | Nudge | Sends one Return nudge with a 10-minute way in | Answers the question itself |
-
-The order of scaffolds in the "stuck" row (self-check before hint before steps before answer) is Beaver's own choice. TutorMoments defines the moves but prescribes no order.
+Three findings from TutorMoments shape the moves:
+- Language models over-scaffold and rarely push for rigor unless both failure modes are named.
+- Funnelling questions are scaffolding, not rigor.
+- Encouragement is not a move.
 
 **Empathy.** Beaver says when a part is hard, plainly and without drama, and treats struggle as normal: it is where learning happens. It never pretends something is easy, and it never makes the learner feel behind.
 
