@@ -12,24 +12,14 @@ import pytest
 import yaml
 
 from beaver.records import load_record, load_registry
+from beaver.validate import record_files
 
 REPO = Path(__file__).resolve().parent.parent
 GOLDEN = sorted((REPO / "tests" / "golden").glob("*.yaml"))
-RECORD_LOCATIONS = ["learner/now.md", "learner/capabilities", "learning/concepts", "learning/inquiries",
-                    "projects/briefs", "sprints", "evidence", "reflections"]
 
 
 def expectation(path):
     return yaml.safe_load(path.read_text(encoding="utf-8"))
-
-
-def record_files(workspace):
-    for location in RECORD_LOCATIONS:
-        target = workspace / location
-        if target.is_file():
-            yield target
-        elif target.is_dir():
-            yield from sorted(target.rglob("*.md"))
 
 
 def test_the_four_fixtures_have_expectations():

@@ -233,6 +233,10 @@ RECORD_TYPES = {
     "now": Now,
 }
 
+# Where records live in a workspace (docs/design.md, "Repository structure").
+RECORD_LOCATIONS = ["learner/now.md", "learner/capabilities", "learning/concepts", "learning/inquiries",
+                    "projects/briefs", "sprints", "evidence", "reflections"]
+
 
 def split_frontmatter(text):
     """(frontmatter dict, body) from a Markdown file that starts with a `---` YAML block."""

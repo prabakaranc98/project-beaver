@@ -1,0 +1,4 @@
+evidence/no-claim.md: needs claim
+learner/capabilities/api-integration.md: points to concept.does-not-exist, which doesn't exist
+learning/concepts/idempotency.md: [[missing-page]] doesn't match any page
+3 problems in 3 files. Fix the first one and run it again.
