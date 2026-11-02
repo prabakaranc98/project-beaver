@@ -1,2 +1,2 @@
-- Read: how payment APIs use idempotency keys
-- Why does backoff need jitter?
+- Read: how teams calibrate LLM judges against human labels
+- When should the copilot abstain instead of guessing?

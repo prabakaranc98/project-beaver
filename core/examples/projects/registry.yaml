@@ -1,10 +1,10 @@
 limits: {active_projects: 2, ideas_under_evaluation: 5, active_sprints: 1, days_since_review: 30}
 projects:
-  - id: project.crm-sync
-    source: {type: github, repository: me/crm-sync}
+  - id: project.support-copilot
+    source: {type: github, repository: me/support-copilot}
     relationship: beaver-started
     state: active
-    practises: [capability.api-integration]
-    brief: brief.crm-sync-retries
-    review: {trigger: manual, last_reviewed_commit: 4f2c1a9}
+    practises: [capability.llm-evaluation]
+    brief: brief.support-copilot-evals
+    review: {trigger: manual, last_reviewed_commit: 7e3b2c1}
     privacy: {classification: private, external_model_use: allowed}
