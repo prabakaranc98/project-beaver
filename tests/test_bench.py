@@ -93,7 +93,7 @@ def test_headless_runs_never_read_the_callers_stdin(monkeypatch, tmp_path):
 def test_a_fork_carries_agents_md_and_the_learners_records():
     fork = bench.fork_of(Path(__file__).parent.parent / "core" / "examples")
     assert (fork / "AGENTS.md").is_file() and (fork / "CLAUDE.md").is_file()
-    assert (fork / "learner" / "now.md").is_file() and (fork / "evidence" / "crm-sync-retries.md").is_file()
+    assert (fork / "learner" / "now.md").is_file() and (fork / "evidence" / "copilot-eval-harness.md").is_file()
     assert not (fork / ".env").exists() and not list(fork.rglob(".gitkeep"))
 
 

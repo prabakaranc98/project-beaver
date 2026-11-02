@@ -4,7 +4,7 @@
 
 ![The Beaver harness at the centre: the learner's experience above, agents, one core library and guards inside, the workspace as the source of truth, the method flowing in, the learner's AI projects observed read-only, and rigor underneath](docs/assets/beaver-harness.png)
 
-> **Status: early build, not usable yet.** M0 · Foundations runs until the Nov 8, 2026 gate. Beaver is built in the open and dogfooded from day one: see the [milestones](https://github.com/prabakaranc98/project-beaver/milestones), [`docs/build-plan.md`](docs/build-plan.md) and [`docs/design.md`](docs/design.md).
+> **Status: early build, not usable yet.** M0 · Foundations is done except the charter, and M1 · Dogfood loop is next. Milestones close on their exit criteria, not on dates. Beaver is built in the open and dogfooded from day one: see the [milestones](https://github.com/prabakaranc98/project-beaver/milestones), [`docs/build-plan.md`](docs/build-plan.md) and [`docs/design.md`](docs/design.md).
 
 ## Try it now
 
@@ -39,7 +39,8 @@ All paths share one workspace format, so you can switch paths without losing any
 | **Claude Code plugin** | Anyone already in Claude Code | `/plugin marketplace add prabakaranc98/project-beaver`, then `/plugin install beaver@beaver`, then `/beaver:onboard` |
 | **Living repo (your fork)** | Claude Code in the VS Code terminal, other skills-compatible assistants (Codex, Cursor, Gemini CLI and others), or no assistant at all | "Use this template", or `beaver init`, then open the folder and start your assistant |
 | **`beaver` CLI** | State, sprints and checks from the terminal, with no model and no tokens | `uv tool install project-beaver` once it is published; the command is `beaver` |
-| **`beaver ui`** (M4) | Seeing it all at once | `beaver ui`, served on localhost with no account |
+| **`beaver ui`** | Seeing it all at once | `beaver ui`: a local React app, shipped inside the package, with no account |
+| **`beaver chat`** | A quick question, or learners without a coding assistant | Put an OpenRouter, Anthropic or OpenAI key in `.env`, then run `beaver chat` |
 
 Your workspace is the source of truth: plain Markdown and YAML in git. Everything else is a thin client over it.
 
@@ -66,7 +67,7 @@ flowchart LR
     ws -. reviews read commits .-> proj
 ```
 
-Beaver never runs an agent loop of its own. Your coding assistant stays the agent. Beaver owns the method, the records, the checks and the learning-first contract.
+Your coding assistant stays the main agent. Beaver's own agent, `beaver chat`, runs on your key and follows the same learning-first rules: it never writes code into your projects or does your thinking for you. Beaver owns the method, the records, the checks and the contract every agent follows.
 
 | Subsystem | What it is | Where it lives | When |
 | --- | --- | --- | --- |
@@ -78,63 +79,61 @@ Beaver never runs an agent loop of its own. Your coding assistant stays the agen
 | Skills | Bounded workflows with fixed output folders: `onboard`, `frame-challenge`, `review-evidence` first, then `capture`, `orient`, `reflect` | `.agents/skills/` | M1–M2 |
 | Claude Code plugin | The same skills as `/beaver:*`, plus a SessionStart hook | `.claude-plugin/` | M2 |
 | CLI | `beaver`, `capture`, `sprint`, `validate`, then the full lifecycle | `beaver` package | M2, M3 |
-| Local UI | A view over the files, never a second source of truth | `beaver ui` | M4 |
+| Local UI | A React app over the files, never a second source of truth | `beaver ui` | M4 |
+| Chat agent | Beaver's own agent on the learner's key, bound by the learning-first rules | `beaver chat`, `beaver ask` | M3 |
 | Companion | Optional weekly digest on your own key; an observer, not an actor | `companion/` | after the MVP |
 
 ## What it looks like
 
-**In the terminal.** `beaver` runs the progress check and points to one next action.
+**In the terminal.** `beaver` checks your workspace and points to one next step. It's planned in #30; `beaver validate` works today.
 
 ```text
 $ beaver
-Progress check · Tue Nov 3, 09:12
-  inbox        6 captures not yet processed
-  inquiries    3 open for more than 2 weeks
-  review       project.crm-sync: 14 commits since the last review
-  reflection   last one 9 days ago
-  balance      all recent work on the AI track; nothing on platform this month
+Waiting · Tue Nov 10
+  questions    1 open: how much should the judge agree with people?
+  review       project.support-copilot: 9 commits since the last review
+  reflection   last one 4 days ago
 
-Next: explain the retry decision in your own words (DECISIONS.md #4) · mode: Hint
+Next: hand-label 20 tickets and compare them with the judge's scores. 25 min
+Enter to start · s smaller · h show me how
 ```
 
-**In the UI** (M4, sketch). It is calm and document-like. Progress shows as evidence and open questions, never points.
+**In the UI** (a sketch; the prototype is in #61). One step leads, in plain words.
 
 ```text
-Beaver   Now   Sprint   Projects   Concepts   Inquiries   Evidence
-──────────────────────────────────────────────────────────────────
-NEXT ACTION                                             mode: Hint
-Explain the retry decision in your own words     → DECISIONS.md #4
+Beaver   Today   Projects   Proof   Plan   Questions
+───────────────────────────────────────────────────────
+NEXT UP · from your support-copilot evals    Help: hints
+Can you explain why your judge needs its own eval?
+Five sentences, about 20 minutes.
 
-WAITING                              SPRINT s03 · crm-sync-retries
-6 captures in the inbox              11.5 of 20 h · ends Friday
-3 inquiries open > 2 weeks           1 session with no artifact
-14 commits since the last review
-Last reflection 9 days ago           MENTOR NOTE           dismiss
-                                     Retries came up in crm-sync
-                                     and search-api. One concept
-                                     note?
+[ Start · 20 min ]   Make it smaller   Show me how   Not today
+
+WHAT CHANGED THIS WEEK
+●  Your harness scores answers and citations on 150 real tickets.
+○  You caught the real question: when can the judge be trusted?
 ```
 
-The evidence ladder is the main visual. Each rung links to the files that prove it.
+Proof is the main visual: plain words, each step linked to the files that prove it.
 
 ```text
-capability.api-integration
-  5 Delivered    ·  someone else used it
-  4 Maintained   ·  fixed or extended weeks later
-  3 Varied       ·  solved a transfer variation
-  2 Explained    ■  retry-flow walkthrough        evidence/crm-sync-retries.md
-  1 Produced     ■  3 commits, 2 tests            crm-sync@a1b2c3d
-  0 Claimed      ■  resume line
+LLM evaluation
+  Someone else used it      ·
+  You improved it later     ·
+  You solved a variation    ·  next: a judge for a new ticket category
+  You can explain it        ■  harness walkthrough   evidence/copilot-eval-harness.md
+  You made it work          ■  harness, first run    support-copilot@7e3b2c1
+  You said you can          ■  resume line
 ```
 
 ## Design language
 
-The design doc sets the stance: calm, document-like, a small token set, five semantic colors in light and dark, and no streaks, badges or confetti. The specifics below are *proposed* and get settled in M4 (#51).
+Calm and plain, with no streaks, badges or confetti. Settled in the UI prototype (#61), recorded for the UI (#51).
 
-- **Type** *(proposed).* One open-licensed superfamily, IBM Plex: Serif for reading records, Sans for interface chrome, Mono for IDs, commands and code. The fonts are bundled with the UI, so it works offline; the terminal keeps your own font.
-- **Color** *(proposed).* Five semantic roles, each meaning one thing everywhere: **evidence** (reviewed and accepted), **inquiry** (an open question), **draft** (generated, not authoritative), **attention** (waiting or aging), **boundary** (a limit or a never-automate zone). The CLI maps the same roles to terminal colors.
-- **Writing.** Plain words, short sentences, specifics over adjectives. A claim links to its evidence. Concepts climb a simplification ladder: *Plain words*, then *Practitioner*, then *Formal*, then *Still fuzzy*. Every agent-written file says which agent, model and assistance mode wrote it.
-- **Illustration** *(proposed).* Diagrams are text (Mermaid in Markdown), so they render on GitHub, in Obsidian and in VS Code, and they diff in git. One visual grammar: boxes are records, cylinders are stores, dashed lines are reads or drafts, arrows are the flow of work. Each diagram answers one question, and none is decoration.
+- **Type.** Figtree for everything you read, Google Sans Code for IDs and commands. Both are open-licensed and bundled with the UI, so it works offline. The terminal keeps your own font.
+- **Color.** Neutrals (white, off-white, grey, charcoal, black) with fern green, in Light, Dark and Fern modes. Five roles mean one thing everywhere, each with its own mark and word, never color alone: **evidence**, **question**, **draft**, **attention** and **boundary**. Every role passes WCAG AA in every mode.
+- **Words.** Plain on screen (Proof, Skill, Question, Focus, Plan), precise in the files. One step at a time, starting from the learner's own work. The rules live in [`core/principles/voice.md`](core/principles/voice.md), and CI checks them.
+- **Illustration.** Diagrams are text (Mermaid in Markdown), so they render on GitHub, in Obsidian and in VS Code, and they diff in git.
 
 ## Background modes
 

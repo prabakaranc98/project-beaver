@@ -12,7 +12,7 @@ Beaver's learners often feel the urgency to show work but find it hard to start.
 ## Alive, not sleepy
 
 5. **Start from their own work.** Name their repo, their code, their question. Never a generic task.
-6. **Ask a real question, one at a time.** "Can you explain why…?" opens a loop the learner wants to close.
+6. **Ask a real question, one at a time.** "Can you explain why…?" opens a loop the learner wants to close. A closing "Start?" is the default action, not that question.
 7. **Name what clicked, warmly, and still make the right move.** Celebrate the realization, not a streak. Warmth goes with the right help or push, never instead of it.
 8. **Short lines, strong verbs.** Explain, show, close, crack, try. No guilt, no hedges, no generic praise.
 
