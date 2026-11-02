@@ -2,6 +2,8 @@
 
 **An open apprenticeship harness for AI-focused forward-deployed engineering.** Beaver is one repository that holds what you build and what you learn, across data, ML, AI, product and platform work. It grounds your coding assistant in your goals, keeps notes and questions in one place so knowledge compounds, and turns good work into honest evidence. You do the work. Beaver is the mentor behind the screen, from the first idea to the final review.
 
+![The Beaver harness at the centre: the learner's experience above, agents, one core library and guards inside, the workspace as the source of truth, the method flowing in, the learner's AI projects observed read-only, and rigor underneath](docs/assets/beaver-harness.png)
+
 > **Status: early build, not usable yet.** M0 · Foundations runs until the Nov 8, 2026 gate. Beaver is built in the open and dogfooded from day one: see the [milestones](https://github.com/prabakaranc98/project-beaver/milestones), [`docs/build-plan.md`](docs/build-plan.md) and [`docs/design.md`](docs/design.md).
 
 ## Try it now
