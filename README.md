@@ -11,7 +11,7 @@ From a clone of this repo, with [uv](https://docs.astral.sh/uv/) installed:
 ```bash
 uvx --from . beaver validate core/examples                 # the sample workspace: all records check out
 uvx --from . beaver validate tests/fixtures/broken-links   # three planted problems, in plain words
-python bench/bench.py shell --workspace core/examples      # Claude Code in a sandbox with the sample workspace
+python bench/bench.py shell --workspace core/examples --fork   # Claude Code + Beaver in a sandbox, a week into the sample
 ```
 
 The last line needs `OPENROUTER_API_KEY` in `.env`; see `CONTRIBUTING.md`.

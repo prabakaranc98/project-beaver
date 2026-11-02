@@ -81,6 +81,27 @@ def skip_when_copying(_folder, names):
     return {n for n in names if n in local or n == ".env" or (n.startswith(".env.") and n != ".env.example")}
 
 
+# The learner's own folders (src/beaver/records.py WORKSPACE_FOLDERS; the bench stays standalone).
+LEARNER_FOLDERS = ["learner", "learning", "projects", "sprints", "evidence", "reflections"]
+
+
+def fork_of(workspace):
+    """A learner's fork: Beaver's template from git HEAD, with `workspace`'s own folders laid in.
+
+    A records-only folder such as core/examples has no AGENTS.md, so running it bare
+    measures plain Claude Code, not Beaver.
+    """
+    folder = Path(tempfile.mkdtemp(prefix="beaver-fork-"))
+    archive = subprocess.run(["git", "-C", str(REPO), "archive", "HEAD"], capture_output=True, check=True).stdout
+    subprocess.run(["tar", "-x", "-C", str(folder)], input=archive, check=True)
+    for name in LEARNER_FOLDERS:
+        if (Path(workspace) / name).is_dir():
+            shutil.copytree(Path(workspace) / name, folder / name, dirs_exist_ok=True, ignore=skip_when_copying)
+    for keep in folder.rglob(".gitkeep"):
+        keep.unlink()
+    return folder
+
+
 def make_sandbox(workspace=None):
     """A throwaway git repo in the system temp dir, seeded from `workspace` if given."""
     sandbox = Path(tempfile.mkdtemp(prefix="beaver-sandbox-"))
@@ -150,8 +171,10 @@ def headless(prompt, model, budget, workspace=None, extra=(), label="run"):
            "--include-hook-events", "--max-budget-usd", str(budget), "--no-session-persistence",
            "--permission-mode", "acceptEdits", *extra]
     before = openrouter_usage(key)
+    # stdin is detached: `claude -p` otherwise reads whatever the caller's stdin holds
+    # (for example the rest of a shell loop's prompts) and answers it too.
     proc = subprocess.run(cmd, cwd=sandbox, env=claude_env(os.environ, key, config),
-                          capture_output=True, text=True)
+                          stdin=subprocess.DEVNULL, capture_output=True, text=True)
     after = settled_usage(key, before)
     lines = proc.stdout.splitlines()
     result, changed = final_result(lines), changed_files(sandbox)
@@ -180,15 +203,19 @@ def headless(prompt, model, budget, workspace=None, extra=(), label="run"):
     return summary
 
 
+def chosen_workspace(args):
+    return fork_of(args.workspace) if args.fork and args.workspace else args.workspace
+
+
 def cmd_run(args):
-    summary = headless(args.prompt, args.model, args.budget, args.workspace, args.claude_args)
+    summary = headless(args.prompt, args.model, args.budget, chosen_workspace(args), args.claude_args)
     print(json.dumps(summary, indent=2))
     return 1 if summary["is_error"] or summary["outside_generated"] else 0
 
 
 def cmd_shell(args):
     key = openrouter_key()
-    sandbox, config = make_sandbox(args.workspace), Path(tempfile.mkdtemp(prefix="beaver-config-"))
+    sandbox, config = make_sandbox(chosen_workspace(args)), Path(tempfile.mkdtemp(prefix="beaver-config-"))
     print(f"sandbox: {sandbox}\nconfig:  {config} (fresh)\nmodels:  via OpenRouter\n")
     subprocess.run(["claude", *args.claude_args], cwd=sandbox, env=claude_env(os.environ, key, config))
     changed = changed_files(sandbox)
@@ -238,10 +265,12 @@ def main(argv=None):
     doctor = sub.add_parser("doctor", parents=[common], help="check the route and the isolation")
     doctor.add_argument("--canary", help="a phrase from your own global CLAUDE.md; it must not reach the run")
     shell = sub.add_parser("shell", parents=[common], help="interactive claude in a sandbox")
-    shell.add_argument("--workspace", type=Path, help="folder to copy into the sandbox")
     run = sub.add_parser("run", parents=[common], help="one headless run, logged to .bench/runs/")
     run.add_argument("prompt")
-    run.add_argument("--workspace", type=Path, help="folder to copy into the sandbox")
+    for p in (shell, run):
+        p.add_argument("--workspace", type=Path, help="folder to copy into the sandbox")
+        p.add_argument("--fork", action="store_true",
+                       help="lay the workspace's records into Beaver's template, as a learner's fork would be")
     args = parser.parse_args(argv)
     args.claude_args = claude_args
     return {"doctor": cmd_doctor, "shell": cmd_shell, "run": cmd_run}[args.command](args)
