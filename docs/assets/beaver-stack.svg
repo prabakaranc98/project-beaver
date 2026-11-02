@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="The Beaver stack: learners building AI projects reach Beaver through a living repo, a plugin, the CLI, a local UI or chat; every path follows the same behaviour rules and calls one core library, which reads the learner's plain-file workspace, the source of truth; the method flows up from upstream, project repos are observed read-only, and a quality loop checks every release." font-family="Figtree, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="tip" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M2 1 L9 5 L2 9" fill="none" stroke="#8A8F95" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#F7F7F4"/>
+
+  <!-- Title -->
+  <text x="64" y="74" font-size="13" font-weight="700" letter-spacing="2.2" fill="#3E6B34">PROJECT BEAVER</text>
+  <text x="64" y="116" font-size="34" font-weight="700" fill="#121314" letter-spacing="-0.4">An apprenticeship harness for AI forward-deployed engineers</text>
+  <text x="64" y="150" font-size="17" fill="#5F646A">The learner builds real AI projects. Beaver keeps the next step easy to take and the proof honest.</text>
+
+  <!-- 1. Learners -->
+  <rect x="64" y="190" width="1080" height="110" rx="12" fill="#ECECE6"/>
+  <text x="88" y="230" font-size="17" font-weight="700" fill="#121314">Learners</text>
+  <text x="88" y="252" font-size="12.5" fill="#5F646A">AI engineers who feel the</text>
+  <text x="88" y="270" font-size="12.5" fill="#5F646A">urgency to show real work</text>
+  <g font-size="12" fill="#5F646A">
+    <rect x="300" y="204" width="190" height="82" rx="8" fill="#FFFFFF"/>
+    <text x="314" y="238" font-size="14.5" font-weight="600" fill="#121314">Support copilot</text>
+    <text x="314" y="258">beyond simple RAG</text>
+    <rect x="510" y="204" width="190" height="82" rx="8" fill="#FFFFFF"/>
+    <text x="524" y="238" font-size="14.5" font-weight="600" fill="#121314">LLM-as-judge harness</text>
+    <text x="524" y="258">checked against humans</text>
+    <rect x="720" y="204" width="190" height="82" rx="8" fill="#FFFFFF"/>
+    <text x="734" y="238" font-size="14.5" font-weight="600" fill="#121314">Agent with tools</text>
+    <text x="734" y="258">survives partial failure</text>
+    <rect x="930" y="204" width="190" height="82" rx="8" fill="#FFFFFF"/>
+    <text x="944" y="238" font-size="14.5" font-weight="600" fill="#121314">AI cost and latency</text>
+    <text x="944" y="258">a budget per outcome</text>
+  </g>
+
+  <!-- edge 1 -->
+  <line x1="176" y1="303" x2="176" y2="325" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+  <text x="196" y="319" font-size="12" fill="#5F646A">they build in the tool they already use</text>
+
+  <!-- 2. Ways in -->
+  <rect x="64" y="330" width="1080" height="96" rx="12" fill="#ECECE6"/>
+  <text x="88" y="368" font-size="17" font-weight="700" fill="#121314">Ways in</text>
+  <text x="88" y="390" font-size="12.5" fill="#5F646A">Same files on every path</text>
+  <g font-size="12" fill="#5F646A">
+    <rect x="300" y="344" width="152" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="314" y="372" font-size="14.5" font-weight="600" fill="#121314">Living repo</text>
+    <text x="314" y="392">VS Code, any assistant</text>
+    <circle cx="438" cy="358" r="4.5" fill="#3E6B34"/>
+    <rect x="467" y="344" width="152" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="481" y="372" font-size="14.5" font-weight="600" fill="#121314">Plugin</text>
+    <text x="481" y="392">for Claude Code</text>
+    <circle cx="605" cy="358" r="4" fill="none" stroke="#8A8F95" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <rect x="634" y="344" width="152" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="648" y="372" font-size="14.5" font-weight="600" fill="#121314">beaver CLI</text>
+    <text x="648" y="392">validate today</text>
+    <circle cx="772" cy="358" r="4" fill="none" stroke="#3E6B34" stroke-width="2"/>
+    <rect x="801" y="344" width="152" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="815" y="372" font-size="14.5" font-weight="600" fill="#121314">beaver ui</text>
+    <text x="815" y="392">a local React app</text>
+    <circle cx="939" cy="358" r="4" fill="none" stroke="#8A8F95" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <rect x="968" y="344" width="152" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="982" y="372" font-size="14.5" font-weight="600" fill="#121314">beaver chat</text>
+    <text x="982" y="392">on your own key</text>
+    <circle cx="1106" cy="358" r="4" fill="none" stroke="#8A8F95" stroke-width="1.5" stroke-dasharray="2 2"/>
+  </g>
+
+  <!-- edge 2 -->
+  <line x1="176" y1="429" x2="176" y2="451" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+  <text x="196" y="445" font-size="12" fill="#5F646A">every path follows the same rules</text>
+
+  <!-- 3. The Beaver way -->
+  <rect x="64" y="456" width="1080" height="96" rx="12" fill="#ECECE6"/>
+  <text x="88" y="494" font-size="17" font-weight="700" fill="#121314">The Beaver way</text>
+  <text x="88" y="516" font-size="12.5" fill="#5F646A">How every agent behaves</text>
+  <g font-size="12" fill="#5F646A">
+    <rect x="300" y="470" width="120" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="314" y="498" font-size="14.5" font-weight="600" fill="#121314">Diagnose</text>
+    <text x="314" y="518">read the moment</text>
+    <line x1="424" y1="504" x2="441" y2="504" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+    <rect x="446" y="470" width="140" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="460" y="498" font-size="14.5" font-weight="600" fill="#121314">Scaffold</text>
+    <text x="460" y="518">when stuck</text>
+    <rect x="596" y="470" width="140" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="610" y="498" font-size="14.5" font-weight="600" fill="#121314">Push for rigor</text>
+    <text x="610" y="518">when they got it</text>
+    <rect x="746" y="470" width="140" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="760" y="498" font-size="14.5" font-weight="600" fill="#121314">Hold back</text>
+    <text x="760" y="518">in flow, or untried</text>
+    <rect x="906" y="470" width="214" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="920" y="498" font-size="14.5" font-weight="600" fill="#121314">Never for the learner</text>
+    <text x="920" y="518">frame · decide · explain · reflect</text>
+    <circle cx="1106" cy="484" r="4.5" fill="#3E6B34"/>
+  </g>
+
+  <!-- edge 3 -->
+  <line x1="176" y1="555" x2="176" y2="577" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+  <text x="196" y="571" font-size="12" fill="#5F646A">clients and agents call one library</text>
+
+  <!-- 4. Core library -->
+  <rect x="64" y="582" width="1080" height="96" rx="12" fill="#ECECE6"/>
+  <text x="88" y="620" font-size="17" font-weight="700" fill="#121314">Core library</text>
+  <text x="88" y="642" font-size="12.5" fill="#5F646A">Python, offline, zero tokens</text>
+  <g font-size="12" fill="#5F646A">
+    <rect x="300" y="596" width="152" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="314" y="624" font-size="14.5" font-weight="600" fill="#121314">Records</text>
+    <text x="314" y="644">9 typed schemas</text>
+    <circle cx="438" cy="610" r="4.5" fill="#3E6B34"/>
+    <rect x="467" y="596" width="152" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="481" y="624" font-size="14.5" font-weight="600" fill="#121314">Validate</text>
+    <text x="481" y="644">IDs, links, claims</text>
+    <circle cx="605" cy="610" r="4.5" fill="#3E6B34"/>
+    <rect x="634" y="596" width="152" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="648" y="624" font-size="14.5" font-weight="600" fill="#121314">Progress check</text>
+    <text x="648" y="644">what's waiting</text>
+    <circle cx="772" cy="610" r="4" fill="none" stroke="#3E6B34" stroke-width="2"/>
+    <rect x="801" y="596" width="152" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="815" y="624" font-size="14.5" font-weight="600" fill="#121314">Home</text>
+    <text x="815" y="644">found from anywhere</text>
+    <circle cx="939" cy="610" r="4" fill="none" stroke="#3E6B34" stroke-width="2"/>
+    <rect x="968" y="596" width="152" height="68" rx="8" fill="#FFFFFF"/>
+    <text x="982" y="624" font-size="14.5" font-weight="600" fill="#121314">Repo observer</text>
+    <text x="982" y="644">read-only</text>
+    <circle cx="1106" cy="610" r="4" fill="none" stroke="#8A8F95" stroke-width="1.5" stroke-dasharray="2 2"/>
+  </g>
+
+  <!-- edge 4 -->
+  <line x1="176" y1="681" x2="176" y2="703" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+  <text x="196" y="697" font-size="12" fill="#5F646A">reads everything · agents write drafts to generated/ only</text>
+
+  <!-- 5. Workspace: the source of truth -->
+  <rect x="64" y="708" width="800" height="110" rx="12" fill="#DDE8D8"/>
+  <text x="88" y="746" font-size="17" font-weight="700" fill="#2F5E2A">Your workspace</text>
+  <text x="88" y="768" font-size="12.5" fill="#2F5E2A">Markdown + YAML in git,</text>
+  <text x="88" y="786" font-size="12.5" fill="#2F5E2A">the source of truth</text>
+  <g font-family="'Google Sans Code', 'SF Mono', Menlo, monospace" font-size="13" fill="#2F5E2A" text-anchor="middle">
+    <rect x="300" y="722" width="125" height="36" rx="7" fill="#FFFFFF"/><text x="362.5" y="745">learner/</text>
+    <rect x="435" y="722" width="125" height="36" rx="7" fill="#FFFFFF"/><text x="497.5" y="745">learning/</text>
+    <rect x="570" y="722" width="125" height="36" rx="7" fill="#FFFFFF"/><text x="632.5" y="745">projects/</text>
+    <rect x="705" y="722" width="125" height="36" rx="7" fill="#FFFFFF"/><text x="767.5" y="745">sprints/</text>
+    <rect x="300" y="768" width="125" height="36" rx="7" fill="#FFFFFF"/><text x="362.5" y="791">evidence/</text>
+    <rect x="435" y="768" width="125" height="36" rx="7" fill="#FFFFFF"/><text x="497.5" y="791">reflections/</text>
+    <rect x="570" y="768" width="125" height="36" rx="7" fill="none" stroke="#3E6B34" stroke-width="1.2" stroke-dasharray="4 3"/><text x="632.5" y="791">generated/</text>
+  </g>
+  <text x="767.5" y="791" font-size="12" fill="#2F5E2A" text-anchor="middle">agent drafts</text>
+  <line x1="704" y1="786" x2="718" y2="786" stroke="#3E6B34" stroke-width="1.2" stroke-dasharray="3 2"/>
+
+  <!-- project repos, observed -->
+  <line x1="892" y1="763" x2="868" y2="763" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+  <rect x="896" y="708" width="248" height="110" rx="12" fill="#ECECE6"/>
+  <text x="920" y="744" font-size="15.5" font-weight="700" fill="#121314">Your project repos</text>
+  <text x="920" y="766" font-size="12.5" fill="#5F646A">GitHub or local</text>
+  <text x="920" y="786" font-size="12.5" fill="#5F646A">Beaver reads, never writes</text>
+  <circle cx="1128" cy="724" r="4" fill="none" stroke="#8A8F95" stroke-width="1.5" stroke-dasharray="2 2"/>
+
+  <!-- edge 5 (up) -->
+  <line x1="176" y1="845" x2="176" y2="823" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+  <text x="196" y="837" font-size="12" fill="#5F646A">the method flows up · upgrades never touch your folders</text>
+
+  <!-- 6. Method base -->
+  <rect x="64" y="848" width="1080" height="80" rx="12" fill="#2B2E31"/>
+  <text x="88" y="882" font-size="16" font-weight="700" fill="#F2F2EF">Method, from upstream</text>
+  <text x="88" y="903" font-size="12.5" fill="#B9BDC2">upgraded by tag</text>
+  <g font-size="13" fill="#F2F2EF" text-anchor="middle">
+    <rect x="300" y="860" width="170" height="56" rx="8" fill="#3A3E42"/><text x="385" y="893">Ontology and schemas</text>
+    <rect x="480" y="860" width="260" height="56" rx="8" fill="#3A3E42"/><text x="610" y="893">Knowledge base: ethos · pathos · logos</text>
+    <rect x="750" y="860" width="190" height="56" rx="8" fill="#3A3E42"/><text x="845" y="893">Nine-module curriculum</text>
+    <rect x="950" y="860" width="170" height="56" rx="8" fill="#3A3E42"/><text x="1035" y="893">Templates, examples</text>
+  </g>
+
+  <!-- Quality loop column -->
+  <rect x="1176" y="190" width="360" height="738" rx="12" fill="#ECECE6"/>
+  <text x="1200" y="230" font-size="17" font-weight="700" fill="#121314">Quality loop</text>
+  <text x="1200" y="252" font-size="12.5" fill="#5F646A">Nothing ships because a date passed.</text>
+  <g font-size="12.5" fill="#5F646A">
+    <rect x="1200" y="272" width="312" height="104" rx="8" fill="#FFFFFF"/>
+    <text x="1216" y="304" font-size="14.5" font-weight="600" fill="#121314">CI on every PR</text>
+    <text x="1216" y="326">Title check, validator, 93 tests.</text>
+    <text x="1216" y="346">A red PR cannot merge.</text>
+    <circle cx="1496" cy="288" r="4.5" fill="#3E6B34"/>
+    <line x1="1356" y1="379" x2="1356" y2="401" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+    <rect x="1200" y="406" width="312" height="104" rx="8" fill="#FFFFFF"/>
+    <text x="1216" y="438" font-size="14.5" font-weight="600" fill="#121314">Terminal bench</text>
+    <text x="1216" y="460">Claude Code in sealed sandboxes,</text>
+    <text x="1216" y="480">run the way a learner would.</text>
+    <circle cx="1496" cy="422" r="4.5" fill="#3E6B34"/>
+    <line x1="1356" y1="513" x2="1356" y2="535" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+    <rect x="1200" y="540" width="312" height="104" rx="8" fill="#FFFFFF"/>
+    <text x="1216" y="572" font-size="14.5" font-weight="600" fill="#121314">Persona lab</text>
+    <text x="1216" y="594">Simulated learners and a separate</text>
+    <text x="1216" y="614">grader that scores help and rigor.</text>
+    <circle cx="1496" cy="556" r="4" fill="none" stroke="#8A8F95" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <line x1="1356" y1="647" x2="1356" y2="669" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+    <rect x="1200" y="674" width="312" height="104" rx="8" fill="#FFFFFF"/>
+    <text x="1216" y="706" font-size="14.5" font-weight="600" fill="#121314">Release acceptance</text>
+    <text x="1216" y="728">Every claimed feature is tested</text>
+    <text x="1216" y="748">before it ships.</text>
+    <circle cx="1496" cy="690" r="4" fill="none" stroke="#8A8F95" stroke-width="1.5" stroke-dasharray="2 2"/>
+    <line x1="1356" y1="781" x2="1356" y2="803" stroke="#8A8F95" stroke-width="1.6" marker-end="url(#tip)"/>
+    <rect x="1200" y="808" width="312" height="104" rx="8" fill="#FFFFFF"/>
+    <text x="1216" y="840" font-size="14.5" font-weight="600" fill="#121314">One tag, every channel</text>
+    <text x="1216" y="862">CLI through uv, the plugin, and</text>
+    <text x="1216" y="882">the template a learner forks.</text>
+    <circle cx="1496" cy="824" r="4" fill="none" stroke="#8A8F95" stroke-width="1.5" stroke-dasharray="2 2"/>
+  </g>
+
+  <!-- Footer -->
+  <text x="64" y="968" font-size="13" fill="#5F646A">github.com/prabakaranc98/project-beaver</text>
+  <g font-size="12.5" fill="#5F646A">
+    <circle cx="1188" cy="964" r="4.5" fill="#3E6B34"/><text x="1199" y="968">Built</text>
+    <circle cx="1252" cy="964" r="4" fill="none" stroke="#3E6B34" stroke-width="2"/><text x="1263" y="968">Next</text>
+    <circle cx="1312" cy="964" r="4" fill="none" stroke="#8A8F95" stroke-width="1.5" stroke-dasharray="2 2"/><text x="1323" y="968">Planned</text>
+    <text x="1536" y="968" text-anchor="end">November 2026</text>
+  </g>
+</svg>
