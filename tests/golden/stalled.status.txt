@@ -1,0 +1,7 @@
+Waiting · Tue Nov 24
+  question   inquiry.idempotency-key-ttl has been open more than 14 days
+  review     project.crm-sync: 14 commits since the last review
+  inbox      6 captures to sort
+  reflection last one 18 days ago
+
+Next: write one goal for this week in learner/now.md.
