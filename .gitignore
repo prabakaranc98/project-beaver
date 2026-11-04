@@ -185,3 +185,6 @@ cython_debug/
 
 # Terminal test bench run logs
 .bench/
+
+# Rewritten by `beaver` on every run
+generated/status.md

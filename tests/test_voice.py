@@ -18,6 +18,7 @@ def learner_facing_files():
     yield REPO / "CLAUDE.md"
     for folder in ("core/principles", "core/templates", ".agents/skills"):
         yield from sorted((REPO / folder).rglob("*.md"))
+    yield from sorted((REPO / "tests" / "golden").glob("*.txt"))  # what the CLI prints, as snapshotted
 
 
 def test_the_list_parses():
