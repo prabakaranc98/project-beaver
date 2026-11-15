@@ -1,0 +1,5 @@
+Waiting · Tue Nov 10
+  limit      3 active projects (your limit is 2)
+  limit      2 active sprints (your limit is 1)
+
+Next: write one goal for this week in learner/now.md.

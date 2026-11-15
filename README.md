@@ -11,12 +11,15 @@
 From a clone of this repo, with [uv](https://docs.astral.sh/uv/) installed:
 
 ```bash
+uvx --from . beaver --home core/examples status            # what is waiting in the sample, and the one next step
 uvx --from . beaver validate core/examples                 # the sample workspace: all records check out
 uvx --from . beaver validate tests/fixtures/broken-links   # three planted problems, in plain words
 python bench/bench.py shell --workspace core/examples --fork   # Claude Code + Beaver in a sandbox, a week into the sample
 ```
 
 The last line needs `OPENROUTER_API_KEY` in `.env`; see `CONTRIBUTING.md`.
+
+In your own workspace, run `beaver init` once. After that, `beaver` from any folder shows what is waiting and the one next step, and writes `generated/status.md` for your assistant to read.
 
 ## The loop
 
