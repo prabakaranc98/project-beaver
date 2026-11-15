@@ -102,7 +102,8 @@ def check_status(root, as_of=None):
     projects = [p for p in registry.get("projects") or [] if p.get("state", "active") == "active"]
     for project in projects:
         clone = (project.get("source") or {}).get("path")
-        if clone:
+        confidential = (project.get("privacy") or {}).get("external_model_use") == "forbidden"
+        if clone and not confidential:  # confidential repos are never read
             repo = Path(clone).expanduser()
             repo = repo if repo.is_absolute() else root / repo
             count = commits_since(repo, (project.get("review") or {}).get("last_reviewed_commit"))

@@ -10,6 +10,7 @@ import typer
 
 from beaver import __version__
 from beaver.home import config_path, remember_home, resolve_home
+from beaver.projects import observe_projects, render as render_projects
 from beaver.status import check_status, write_status
 from beaver.validate import validate_workspace
 
@@ -58,6 +59,12 @@ def root(
 def status(ctx: typer.Context):
     """Show what is waiting and the next step, without writing anything."""
     typer.echo(check_status(home_or_exit(ctx).path).render())
+
+
+@app.command()
+def projects(ctx: typer.Context):
+    """Show each registered project repo: branch, last commit and what is unreviewed. Read-only."""
+    typer.echo(render_projects(observe_projects(home_or_exit(ctx).path)))
 
 
 @app.command()

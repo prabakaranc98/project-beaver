@@ -1,0 +1,14 @@
+{
+  "name": "beaver",
+  "description": "Beaver: an apprenticeship harness for people learning to build with AI.",
+  "owner": {
+    "name": "Prabakaran Chandran"
+  },
+  "plugins": [
+    {
+      "name": "beaver",
+      "source": "./",
+      "description": "An apprenticeship harness for Claude Code: your goals, your project repos (read-only) and checked proof in one workspace."
+    }
+  ]
+}
