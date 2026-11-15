@@ -1,0 +1,11 @@
+{
+  "name": "beaver",
+  "version": "0.0.0",
+  "description": "An apprenticeship harness: grounds Claude Code in your goals, watches your project repos read-only, and turns work into checked proof. You do the work.",
+  "author": { "name": "Prabakaran Chandran" },
+  "homepage": "https://github.com/prabakaranc98/project-beaver",
+  "repository": "https://github.com/prabakaranc98/project-beaver",
+  "license": "MIT",
+  "skills": "./.agents/skills/",
+  "hooks": "./hooks/hooks.json"
+}
