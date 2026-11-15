@@ -1,9 +1,9 @@
 ---
 id: now.current
-mode: hint                # socratic · hint · example · pair · delegate
-focus: brief.crm-sync-retries
-capabilities: [capability.api-integration]
-questions: [inquiry.idempotency-key-ttl]
-next_step: Explain in five sentences why the retry needs the key
+mode: hint
+focus: brief.support-copilot-evals
+capabilities: [capability.llm-evaluation]
+questions: [inquiry.judge-agreement]
+next_step: Hand-label 20 tickets and compare them with the judge's scores
 ---
-This week: finish safe retries for crm-sync and close the key-expiry question.
+This week: an eval harness I can trust for the support copilot, and an answer to how far the judge can be trusted.

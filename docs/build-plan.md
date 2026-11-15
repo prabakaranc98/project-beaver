@@ -1,6 +1,6 @@
 # Build plan
 
-Beaver is built in the open with GitHub issues, milestones, PRs and releases, and dogfooded from day one. Stage 0 plus the pilot runs four weeks, from Nov 2 to Nov 29, 2026.
+Beaver is built in the open with GitHub issues, milestones, PRs and releases, and dogfooded from day one. Milestones close on their exit criteria, not on dates (decided 2026-11-01).
 
 ## Dogfood protocol
 
@@ -17,7 +17,7 @@ Pracha is learner zero. Beaver is developed inside the same loop it teaches, and
 
 ## Milestones
 
-Three milestones and two releases over four weeks. Each milestone closes only when its exit criteria are met, never just because the date has passed.
+Three milestones and two releases. Each milestone closes only when its exit criteria are met, never just because the date has passed.
 
 | Milestone | Goal | Exit criteria | Release |
 | --- | --- | --- | --- |
@@ -27,16 +27,16 @@ Three milestones and two releases over four weeks. Each milestone closes only wh
 
 ```mermaid
 ---
-title: "The first release comes after one week of dogfooding"
+title: "The first release comes after the dogfood loop"
 ---
 flowchart LR
-    subgraph plan["Beaver build plan by week, Nov 2026"]
+    subgraph plan["Beaver build plan"]
         direction LR
-        m0(["M0 · Foundations<br/>Nov 2 to Nov 8"])
-        m1(["M1 · Dogfood loop<br/>Nov 9 to Nov 15"])
-        v01{"<b>Release v0.1.0<br/>Nov 15</b>"}
-        m2(["M2 · Pilot<br/>Nov 16 to Nov 29"])
-        v02{"Release v0.2.0<br/>Nov 29"}
+        m0(["M0 · Foundations"])
+        m1(["M1 · Dogfood loop"])
+        v01{"<b>Release v0.1.0</b>"}
+        m2(["M2 · Pilot"])
+        v02{"Release v0.2.0"}
     end
 
     m0 --> m1 --> v01 --> m2 --> v02
@@ -46,7 +46,7 @@ flowchart LR
     style plan fill:none,stroke:none
 ```
 
-v0.1.0 is the first gate that matters: it ships only if the dogfood loop shows a better brief.
+v0.1.0 is the first gate that matters: it ships only if the dogfood loop shows a better brief. M3 · Rich CLI and M4 · Local UI run in parallel and are not gated on M2 (decided 2026-11-01).
 
 ## Issue backlog
 
@@ -115,8 +115,8 @@ Beaver has four layers of tests, from cheap and automatic to slow and human. The
 
 | Gate | Go if | Adjust if | Kill or pause if |
 | --- | --- | --- | --- |
-| End of M0 (Nov 8) | CI green; schemas feel natural to write | Schemas feel heavy; simplify before M1 | — |
-| End of M1 (Nov 15) | The after-brief is judged better, and Beaver time is at or under 15% of sprint hours | Briefs improve but Beaver time is too high; cut skills | No visible improvement and friction keeps rising |
-| End of M2 (Nov 29) | The pilot finishes a loop and wants to continue | The pilot needs heavy help; simplify onboarding | The pilot stalls and Beaver adds nothing over a plain notes repo |
+| End of M0 | CI green; schemas feel natural to write | Schemas feel heavy; simplify before M1 | — |
+| End of M1 | The after-brief is judged better, and Beaver time is at or under 15% of sprint hours | Briefs improve but Beaver time is too high; cut skills | No visible improvement and friction keeps rising |
+| End of M2 | The pilot finishes a loop and wants to continue | The pilot needs heavy help; simplify onboarding | The pilot stalls and Beaver adds nothing over a plain notes repo |
 
 A kill decision is a result, not a failure. It gets written up as a reflection and an insight card.

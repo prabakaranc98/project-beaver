@@ -15,7 +15,7 @@ Project Beaver is an open, forkable repository where anyone can build the craft 
 | **What changes over time** | The learner's records: goals, notes, questions, projects, evidence, reflections. The method stays stable. |
 | **What never changes** | The purpose: building judgment and agency, not producing more generated work. |
 | **Status** | v0.2 design. Nothing is built yet. |
-| **Next step** | A 4-week MVP tested by the author and one pilot learner. |
+| **Next step** | An MVP tested by the author and one pilot learner. |
 
 The name fits the method: a beaver builds deliberately, one piece at a time, and what it builds reshapes its environment.
 
@@ -208,7 +208,7 @@ The two arrows are the only ways Beaver touches a project: it hands over context
 
 ## Beaver as a harness: CLI, local UI and distribution
 
-Beaver should run as a harness, but a thin one. The `beaver` CLI owns state, lifecycle, modes and checks, and it lives in the terminal where the learner already works. The learner's coding assistant stays the agent. Beaver never runs its own agent loop, because that would compete with tools that improve every month and pull effort away from what only Beaver has: the method, the ontology and the learning-first contract.
+Beaver should run as a harness, but a thin one. The `beaver` CLI owns state, lifecycle, modes and checks, and it lives in the terminal where the learner already works. The learner's coding assistant stays the main agent. Beaver adds one bounded agent of its own, `beaver chat` and `beaver ask`, on the learner's key (decided 2026-11-01, #58). Its tools run through Beaver's core, it writes drafts only to `generated/`, and it never writes code or does the learner's thinking. Beaver does not grow a general autonomous agent, because that would compete with tools that improve every month and pull effort away from what only Beaver has: the method, the ontology and the learning-first contract.
 
 ```mermaid
 ---
@@ -303,7 +303,7 @@ The design system is calm and document-like. It uses a small token set (type sca
 | MCP server | `beaver mcp`, added to any MCP-capable agent's config |
 | Upgrades | `beaver upgrade` pulls `core/` and skills, runs schema migrations and shows the changelog |
 
-**Deliberate limits.** The harness has no agent loop and makes no autonomous code changes. It never writes to project repos. It works offline, and its only network call is the opt-in companion. It collects no telemetry. Every command works on plain files, so a learner can stop using it and keep everything.
+**Deliberate limits.** The harness's own agent is bounded (#58) and makes no autonomous code changes. It never writes to project repos. It works offline, and its only network call is the opt-in companion. It collects no telemetry. Every command works on plain files, so a learner can stop using it and keep everything.
 
 ## Getting started: three ways in, onboarding and budgets
 
@@ -344,7 +344,7 @@ Beaver should cost little in tokens and less in attention. Two budgets enforce t
 | Beaver's own model spend (companion, standalone CLI, onboarding) | A monthly cap the learner sets during onboarding | Calls stop; deterministic features keep working |
 | Tokens per skill run | A per-skill cap, plus short skills and small context packets | The skill ends with its best single next action |
 | Time with Beaver vs time building | Beaver time stays at or under 15% of sprint hours | Beaver goes quiet and replies with one line: "Close this and build." |
-| Open-ended chat | None: Beaver has no chat mode | Every skill ends by handing work back |
+| Open-ended chat | `beaver chat` on the learner's key, with a budget cap (decided 2026-11-01) | Every reply ends by handing work back |
 
 **Deterministic first.** The progress check, validator, mentor patterns, WIP limits and sprint math use zero tokens. Models are called only where judgment helps, such as drafting a review or turning a resume into claims.
 
@@ -1094,17 +1094,17 @@ One honest limit: anyone who forks Beaver can change anything. These safeguards 
 
 ## Roadmap
 
-Beaver is built in four stages, and no stage starts until the one before it passes its gate. The first two stages are the 4-week MVP.
+Beaver is built in four stages, and no stage starts until the one before it passes its gate. The first two stages are the MVP. Milestones close on their exit criteria, not on dates (decided 2026-11-01).
 
 ```mermaid
 ---
 title: "The MVP is two stages; nothing later starts before its gate"
 ---
 flowchart LR
-    subgraph mvp["<b>4-week MVP</b>"]
-        s0["<b>Prove the method</b><br/><i>Weeks 1–2</i><br/>Charter, ontology,<br/>templates, 6 skills<br/>Author runs a loop"]
+    subgraph mvp["<b>MVP</b>"]
+        s0["<b>Prove the method</b><br/><i>M0 and M1</i><br/>Charter, ontology,<br/>templates, 6 skills<br/>Author runs a loop"]
         g0{"Gate: author finishes<br/>one full loop"}
-        s1["<b>Pilot</b><br/><i>Weeks 3–4</i><br/>Claude Code plugin<br/>beaver CLI: status<br/>One pilot learner"]
+        s1["<b>Pilot</b><br/><i>M2</i><br/>Claude Code plugin<br/>beaver CLI: status<br/>One pilot learner"]
     end
     g1{"<b>Gate: every pilot<br/>learner closes a loop</b>"}
     s2["<b>Connect projects</b><br/><i>After the MVP</i><br/>Registry, packets<br/>start-project skill<br/>Second adapter"]
@@ -1120,7 +1120,7 @@ flowchart LR
 
 The MVP ends at the highlighted gate. Accessories have no date and start only when two or more learners ask for the same thing.
 
-**MVP backlog (weeks 1–4)**
+**MVP backlog**
 
 - [ ] Write CHARTER.md (one page) and AGENTS.md (under 80 lines)
 - [ ] Write the ontology schema, evidence levels, five track maps, seed capability map in `core/ontology/`
@@ -1132,7 +1132,7 @@ The MVP ends at the highlighted gate. Accessories have no date and start only wh
 - [ ] Add the Claude Code adapter: CLAUDE.md, `.claude/skills/`, permission deny rules
 - [ ] Write a worked example workspace in `core/examples/`
 - [ ] Run the author's own full loop on one real project
-- [ ] Onboard one pilot learner, then hold a 30-minute debrief at week 4 (two more, from different tracks, after the MVP gate)
+- [ ] Onboard one pilot learner, then hold a 30-minute debrief at the end of M2 (two more, from different tracks, after the MVP gate)
 
 **Explicitly not in the MVP:** a local UI, a graph view, MCP integrations, project creation scripts, a second adapter, publishing, the learning companion, or a curation agent. The companion is the first accessory to build once the MVP gate passes.
 
@@ -1193,17 +1193,17 @@ The biggest risk is that Beaver becomes another system to maintain instead of a 
 - [ ] Which second role pack comes first, and is it written upstream or by the community?
 - [ ] Should the 2025 Agent-Beaver idea return as an optional `curate-resources` skill?
 - [ ] Is it one fork per learner, or is there a mentor view across several learners?
-- [ ] Which license fits: MIT or Apache-2.0 for `core/`, and what is the stated default for learner content?
-- [ ] Should a second person verify level 3 and above, or is the learner's own variation task enough?
+- [x] Which license fits: MIT or Apache-2.0 for `core/`, and what is the stated default for learner content? MIT for Beaver; learner content stays the learner's (decided 2026-11-01).
+- [x] Should a second person verify level 3 and above, or is the learner's own variation task enough? Level 3 and above needs a variation task or another person, recorded in `reviewed_in` (#25).
 
 **Harness questions**
 
-- [ ] Should the CLI be written in Python (uv tool, Typer, Pydantic, FastAPI for the UI) or TypeScript (npx, a Node server)?
-- [ ] What is the package and command name, and is it free on PyPI or npm?
+- [x] Should the CLI be written in Python (uv tool, Typer, Pydantic, FastAPI for the UI) or TypeScript (npx, a Node server)? Python (decided 2026-11-01).
+- [x] What is the package and command name, and is it free on PyPI or npm? `project-beaver` on PyPI, command `beaver` (decided 2026-11-01).
 - [ ] Should `beaver watch` stay a foreground process, or install as a user service?
-- [ ] Which UI stack fits the calm design system best: server-rendered HTML with htmx, or a small single-page app?
+- [x] Which UI stack fits the calm design system best: server-rendered HTML with htmx, or a small single-page app? A React single-page app, shipped prebuilt in the package (decided 2026-11-01).
 
-* [ ] Should the Claude Code plugin be the default path, with the template second, or the reverse?
+* [x] Should the Claude Code plugin be the default path, with the template second, or the reverse? Template first while building; the plugin comes with #39 (decided 2026-11-01).
 * [ ] Should onboarding's resume parsing run locally by default (a small local model) to avoid sending the resume anywhere?
 
 ## Review checklist and decision log
@@ -1226,8 +1226,8 @@ Read the doc through once with these questions, then record each settled choice 
 | --- | --- | --- | --- |
 | 2026-11-01 | Three ways in sharing one workspace: Claude Code plugin, template fork, standalone CLI with the learner's own key | Meet learners in the tool they already use | Proposed |
 | 2026-11-01 | Seven-question onboarding; resume lines enter as level-0 claims, never as evidence | Fast start without inflating the record | Proposed |
-| 2026-11-01 | Token and time budgets: Beaver's own spend capped, Beaver time at or under 15% of sprint hours, no chat mode | Effort goes into building, not into talking to Beaver | Proposed |
-| 2026-11-01 | Beaver ships as a thin harness: `beaver` CLI, local UI, MCP server and companion over one core library; no agent loop of its own | Lives in the terminal; the coding assistant stays the agent; files stay the truth | Proposed |
+| 2026-11-01 | Token and time budgets: Beaver's own spend capped, Beaver time at or under 15% of sprint hours, no chat mode (chat superseded: see the chat agent row) | Effort goes into building, not into talking to Beaver | Proposed |
+| 2026-11-01 | Beaver ships as a thin harness: `beaver` CLI, local UI, MCP server and companion over one core library; no agent loop of its own (superseded: see the chat agent row) | Lives in the terminal; the coding assistant stays the agent; files stay the truth | Proposed |
 | 2026-11-01 | Beaver ships an FDE knowledge base organized as ethos, pathos and logos | The hard parts of FDE are judgment, people and reasoning, not project management | Proposed |
 | 2026-11-01 | Deep-work sprints with an hour budget; Obsidian-compatible recording | Focus is visible, and notes work in tools people already use | Proposed |
 | 2026-11-01 | The registry enforces WIP limits: 2 active projects, 1 active sprint | Prevents repo sprawl and unfinished work | Proposed |
@@ -1244,6 +1244,18 @@ Read the doc through once with these questions, then record each settled choice 
 | 2026-11-01 | Evidence levels 0–5 instead of proficiency scores | Qualitative claims that can be checked | Proposed |
 | 2026-11-01 | Agents write only to `generated/` | Learner records stay the learner's | Proposed |
 | 2026-11-01 | Praxis (data foundry) and Agent-Beaver (curation) stay out of v1 | Protect a narrow MVP | Proposed |
+| 2026-11-01 | The Build plan wins where it disagrees with the Roadmap: 5 seed pages, 1 pilot learner, 6 templates | One plan to measure the gates against | Decided |
+| 2026-11-01 | Python core library; package `project-beaver`, command `beaver` | Matches pytest, `uv tool install` and the doc's own lean | Decided |
+| 2026-11-01 | The repo root is the learner template; maintainer-only files are listed in `beaver.yaml` | The fork-and-upgrade model with the least machinery | Decided |
+| 2026-11-01 | MIT for Beaver's code, method, skills and templates; learner content stays the learner's | An open method, with learning the learner owns | Decided |
+| 2026-11-01 | Milestone dates dropped: milestones close on exit criteria, and M3 and M4 run in parallel | Go faster without date pressure | Decided |
+| 2026-11-01 | A chat agent on the learner's own key (`beaver chat`, `beaver ask`), bound by the learning-first contract | Learners without a coding assistant still get a mentor | Decided |
+| 2026-11-01 | One home per learner, remembered in `~/.config/beaver` | Every client finds the same workspace from any folder | Decided |
+| 2026-11-01 | The UI is a React app, shipped prebuilt inside the Python package | A rich UI with no Node on the learner's machine | Decided |
+| 2026-11-01 | Agents diagnose, then scaffold, push for rigor or hold back (TutorMoments); the voice rules are checked in CI | Models over-help by default; the rules keep the learner doing the thinking | Decided |
+| 2026-11-01 | Figtree and Google Sans Code; neutrals with fern; Light, Dark and Fern modes | Clean, calm and open-licensed | Decided |
+| 2026-11-01 | Sandboxing is layered: srt for fast runs, Docker with a key-holding proxy for full runs | Tests run sealed, and the key never enters the sandbox | Decided |
+| 2026-11-01 | Nothing ships on a date: every claimed feature passes release acceptance | Claims need evidence, Beaver's own included | Decided |
 
 ### Sources
 

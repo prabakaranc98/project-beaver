@@ -34,7 +34,7 @@ def test_every_example_record_validates(path):
 
 def test_the_example_registry_validates():
     registry = load_registry(EXAMPLES / "registry.yaml")
-    assert registry.limits.active_projects == 2 and registry.projects[0].id == "project.crm-sync"
+    assert registry.limits.active_projects == 2 and registry.projects[0].id == "project.support-copilot"
 
 
 def test_exported_schemas_match_the_models():
